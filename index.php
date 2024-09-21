@@ -13,7 +13,7 @@
     ?>
   <section class="section">
     <div class="container">
-      <h1 class="title">お問い合わせフォーム</h1>
+      <h1 class="title">Webシステム お問い合わせフォーム</h1>
       <form action="contact.php" method="POST"  enctype="multipart/form-data">
         <div class="field">
           <label class="label" for="name">名前</label>
