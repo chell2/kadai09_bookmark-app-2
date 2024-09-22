@@ -55,7 +55,7 @@
               </div>
             </div>
             <div class="field">
-              <label class="label">連絡方法</label>
+              <label class="label">希望対応</label>
               <div class="control">
                 <div class="select">
                   <select name="contact_method">

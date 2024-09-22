@@ -7,10 +7,6 @@ body {
   margin: 20px auto;
 }
 
-.mt-20 {
-  margin: 20px 0;
-}
-
 .form-container {
   max-width: 65%;
   margin: 0 auto;
@@ -24,6 +20,10 @@ body {
 .is-danger {
   border-color: #f14668;
   }
+  
+.small-font {
+    font-size: 0.9rem !important;
+}
   
 /* モバイルサイズで表示を切り替える */
 .mobile-hidden {

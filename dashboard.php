@@ -46,23 +46,23 @@ if (file_exists("inquiries.csv")) {
       <p class="title has-text-centered">ダッシュボード</p>
     </section>
     <section>
-      <div class="chart-container">
-        <div class="columns mt-20">
+      <div class="chart-container block mt-5">
+        <div class="columns is-8">
           <div class="column">
               <h2 class="subtitle">お問い合わせ件数</h2>
               <div class="is-align-self-flex-end">
-              <canvas id="barChart"></canvas>
+              <canvas id="barChart" style="width: 100%;"></canvas>
               </div>
           </div>
-          <div class="column">
+          <div class="column is-4">
               <h2 class="subtitle">タグ分布図</h2>
-              <canvas id="pieChart"></canvas>
+              <canvas id="pieChart" style="width: 100%;"></canvas>
           </div>
         </div>
       </div>
     </section>
     <section>
-      <div class="chart-container">
+      <div class="chart-container block mt-5">
         <h1 class="title">お問い合わせ一覧</h1>
         <table class="table is-striped is-fullwidth">
           <thead>
@@ -72,9 +72,11 @@ if (file_exists("inquiries.csv")) {
               <th>メール</th>
               <th>メッセージ</th>
               <th>タグ</th>
-              <th>連絡方法</th>
+
+
+              <th>添付<br>ファイル</th>
+              <th>希望<br>対応</th>
               <th>日時</th>
-              <th>ファイル名</th>
             </tr>
           </thead>
           <tbody>
@@ -85,10 +87,10 @@ if (file_exists("inquiries.csv")) {
             <?php else: ?>
             <?php foreach ($inquiries as $inquiry): ?>
               <tr>
-                <td><?php echo htmlspecialchars($inquiry[0]); ?></td>
-                <td><?php echo htmlspecialchars($inquiry[1]); ?></td>
-                <td><?php echo htmlspecialchars($inquiry[2]); ?></td>
-                <td><?php echo htmlspecialchars($inquiry[3]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[0]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[1]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[2]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[3]); ?></td>
                 <td>
                   <?php if (!empty($inquiry[4])): ?>
                   <?php $tags = explode(",", $inquiry[4]);
@@ -99,8 +101,6 @@ if (file_exists("inquiries.csv")) {
                       ・・・
                   <?php endif; ?>
                 </td>
-                <td><?php echo htmlspecialchars($inquiry[5]); ?></td>
-                <td><?php echo htmlspecialchars($inquiry[7]); ?></td>
                 <td>
                   <?php if (!empty($inquiry[6])): ?>
                       <img src="upload/<?php echo htmlspecialchars($inquiry[6]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
@@ -108,6 +108,8 @@ if (file_exists("inquiries.csv")) {
                       ・・・
                   <?php endif; ?>
                 </td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[5]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($inquiry[7]); ?></td>
               </tr>
             <?php endforeach; ?>
             <?php endif; ?>
