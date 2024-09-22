@@ -10,9 +10,18 @@
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
+    <section class="hero is-info">
+        <!-- 通常表示 -->
+        <p class="title has-text-centered mobile-hidden">
+          Webシステム お問い合わせフォーム
+        </p>
+        <!-- モバイルサイズで表示 -->
+        <p class="title has-text-centered mobile-visible">
+          Webシステム<br>お問い合わせフォーム
+        </p>
+    </section>
     <section class="section">
       <div class="container">
-        <h1 class="title has-text-centered">Webシステム お問い合わせフォーム</h1>
         <div class="form-container">
           <form action="contact.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="field">
@@ -34,7 +43,7 @@
               </div>
             </div>
             <div class="field">
-              <label class="label" for="message">問い合わせ内容</label>
+              <label class="label" for="message">お問い合わせ内容</label>
               <div class="control">
                 <textarea class="textarea" id="message" name="message" rows="5" required></textarea>
               </div>

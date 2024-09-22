@@ -3,17 +3,42 @@ body {
   margin: 20px;
 }
 
-form input,
-form textarea {
-  margin-bottom: 10px;
-  display: block;
-  width: 100%;
+.title {
+  margin: 20px auto;
+}
+
+.mt-20 {
+  margin: 20px 0;
 }
 
 .form-container {
   max-width: 65%;
   margin: 0 auto;
   }
+  
+.chart-container {
+  max-width: 75%;
+  margin: 0 auto;
+  }
+  
 .is-danger {
   border-color: #f14668;
   }
+  
+/* モバイルサイズで表示を切り替える */
+.mobile-hidden {
+  display: block;
+}
+.mobile-visible {
+  display: none;
+}
+
+/* モバイルサイズのメディアクエリ */
+@media screen and (max-width: 768px) {
+  .mobile-hidden {
+    display: none;
+  }
+  .mobile-visible {
+    display: block;
+  }
+}
