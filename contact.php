@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tags = [];
         
         $message = trim($message);
-          
+        
         if (mb_strpos($message, "サポート") !== false) $tags[] = "サポート";
         if (mb_strpos($message, "価格") !== false || mb_strpos($message, "費用") !== false) $tags[] = "価格";
         if (mb_strpos($message, "バグ") !== false) $tags[] = "バグ";
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $reply_message .= "メールでの対応となります。";
     }
 
-    $headers = "From: rei1259@gmail.com";
+    $headers = "From: test@example.com";
     mail($email, "お問い合わせありがとうございます", $reply_message, $headers);
 
     // リダイレクト
