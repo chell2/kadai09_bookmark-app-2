@@ -89,10 +89,16 @@ if (file_exists("inquiries.csv")) {
                 <td><?php echo htmlspecialchars($inquiry[1]); ?></td>
                 <td><?php echo htmlspecialchars($inquiry[2]); ?></td>
                 <td><?php echo htmlspecialchars($inquiry[3]); ?></td>
-                <td><?php $tags = explode(",", $inquiry[4]);
+                <td>
+                  <?php if (!empty($inquiry[4])): ?>
+                  <?php $tags = explode(",", $inquiry[4]);
                           foreach ($tags as $tag) {
                             echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span><br>';
-                          }; ?></td>
+                          }; ?>
+                  <?php else: ?>
+                      ・・・
+                  <?php endif; ?>
+                </td>
                 <td><?php echo htmlspecialchars($inquiry[5]); ?></td>
                 <td><?php echo htmlspecialchars($inquiry[7]); ?></td>
                 <td>
