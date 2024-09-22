@@ -6,15 +6,7 @@
     <title>お問い合わせフォーム</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-      .form-container {
-        max-width: 65%;
-        margin: 0 auto;
-        }
-      .is-danger {
-        border-color: #f14668;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
     <?php include("inc/menu.html"); ?>

@@ -37,6 +37,7 @@ if (file_exists("inquiries.csv")) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ダッシュボード</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>

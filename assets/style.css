@@ -9,3 +9,11 @@ form textarea {
   display: block;
   width: 100%;
 }
+
+.form-container {
+  max-width: 65%;
+  margin: 0 auto;
+  }
+.is-danger {
+  border-color: #f14668;
+  }
