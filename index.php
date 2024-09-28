@@ -23,7 +23,7 @@
     <section class="section">
       <div class="container">
         <div class="form-container">
-          <form action="contact.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+          <form action="insert.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="field">
               <label class="label" for="name">名前</label>
               <div class="control has-icons-left">

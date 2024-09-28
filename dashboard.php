@@ -1,33 +1,48 @@
 <?php
-function countTags() {
-    $tag_counts = [];
-    if (($file = fopen("inquiries.csv", "r")) !== FALSE) {
-        while (($data = fgetcsv($file)) !== FALSE) {
-            $tags = explode(",", $data[4]); // タグの位置
-            foreach ($tags as $tag) {
-                if ($tag !== "") {
-                    if (!isset($tag_counts[$tag])) $tag_counts[$tag] = 0;
-                    $tag_counts[$tag]++;
-                }
+//1.  DB接続
+$dsn = 'mysql:dbname=ada02_contact_form;charset=utf8;host=localhost';
+$id = 'root';
+$password = ''; //Password:MAMP='root',XAMPP=''
+try {
+  $pdo = new PDO($dsn, $id, $password);
+} catch (PDOException $e) {
+  exit('DB_CONECT:'.$e->getMessage());
+}
+
+//２．データ登録SQL作成
+$sql = 'SELECT * FROM inquiries';
+$stmt = $pdo->prepare($sql);
+$status = $stmt->execute(); //true or false
+
+//３．データ表示
+$view="";
+if($status==false) {
+  //execute（SQL実行時にエラーがある場合）
+  $error = $stmt->errorInfo();
+  exit("SQL_ERROR:".$error[2]);
+}
+
+//全データ取得
+$values =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// タグの件数を集計
+$tag_counts = [];
+foreach($values as $value) {
+    if (!empty($value['tags'])) {
+        $tags = explode(",", $value['tags']);
+        foreach ($tags as $tag) {
+            $trimmed_tag = trim($tag);
+            if (isset($tag_counts[$trimmed_tag])) {
+                $tag_counts[$trimmed_tag]++;
+            } else {
+                $tag_counts[$trimmed_tag] = 1;
             }
         }
-        fclose($file);
-    }
-    return $tag_counts;
-}
-
-$tag_counts = countTags();
-
-// $inquiriesの初期化
-$inquiries = [];
-if (file_exists("inquiries.csv")) {
-    if (($file = fopen("inquiries.csv", "r")) !== FALSE) {
-        while (($data = fgetcsv($file)) !== FALSE) {
-            $inquiries[] = $data;
-        }
-        fclose($file);
     }
 }
+
+// JSONに値を渡す場合に使う
+$json = json_encode($values, JSON_UNESCAPED_UNICODE);
 ?>
 
 <!DOCTYPE html>
@@ -80,20 +95,21 @@ if (file_exists("inquiries.csv")) {
             </tr>
           </thead>
           <tbody>
-            <?php if (empty($inquiries)): ?>
+            <?php if (empty($values)): ?>
               <tr>
                   <td colspan="8">データがありません。</td>
               </tr>
             <?php else: ?>
-            <?php foreach ($inquiries as $inquiry): ?>
+            <?PHP foreach($values as $value): ?>
               <tr>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[0]); ?></td>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[1]); ?></td>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[2]); ?></td>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[3]); ?></td>
+                <td class="small-font"><?=$value["id"]?></td>
+                <td class="small-font"><?=$value["name"]?></td>
+                <td class="small-font"><?=$value["email"]?></td>
+                <td class="small-font"><?=$value["message"]?></td>
                 <td>
-                  <?php if (!empty($inquiry[4])): ?>
-                  <?php $tags = explode(",", $inquiry[4]);
+                  <?php if (!empty($value["tags"])): ?>
+                  <?php
+                    $tags = explode(",", $value["tags"]);
                           foreach ($tags as $tag) {
                             echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span><br>';
                           }; ?>
@@ -102,14 +118,14 @@ if (file_exists("inquiries.csv")) {
                   <?php endif; ?>
                 </td>
                 <td>
-                  <?php if (!empty($inquiry[6])): ?>
-                      <img src="upload/<?php echo htmlspecialchars($inquiry[6]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
+                  <?php if (!empty($value["file_name"])): ?>
+                      <img src="upload/<?php echo htmlspecialchars($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
                   <?php else: ?>
                       ・・・
                   <?php endif; ?>
                 </td>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[5]); ?></td>
-                <td class="small-font"><?php echo htmlspecialchars($inquiry[7]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($value["contact_method"]); ?></td>
+                <td class="small-font"><?php echo htmlspecialchars($value["created_at"]); ?></td>
               </tr>
             <?php endforeach; ?>
             <?php endif; ?>
