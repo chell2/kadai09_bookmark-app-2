@@ -1,13 +1,7 @@
 <?php
 //1.  DB接続
-$dsn = 'mysql:dbname=ada02_contact_form;charset=utf8;host=localhost';
-$id = 'root';
-$password = ''; //Password:MAMP='root',XAMPP=''
-try {
-  $pdo = new PDO($dsn, $id, $password);
-} catch (PDOException $e) {
-  exit('DB_CONECT:'.$e->getMessage());
-}
+include("funcs.php");
+$pdo=db_conn();
 
 //２．データ登録SQL作成
 $sql = 'SELECT * FROM inquiries';

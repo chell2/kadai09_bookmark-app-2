@@ -8,14 +8,8 @@ $contact_method = $_POST['contact_method'];
 var_dump($name.$email.$message.$contact_method.$file_names); //OK
 
 //2. DB接続
-$dsn = 'mysql:dbname=ada02_contact_form;charset=utf8;host=localhost';
-$id = 'root';
-$password = ''; //Password:MAMP='root',XAMPP=''
-try {
-  $pdo = new PDO($dsn, $id, $password);
-} catch (PDOException $e) {
-  exit('DB_CONECT:'.$e->getMessage());
-}
+include("funcs.php");
+$pdo=db_conn();
 
 // タグの自動生成
 function assignTags($message) {
