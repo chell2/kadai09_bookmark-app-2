@@ -25,6 +25,10 @@ body {
     font-size: 0.9rem !important;
 }
   
+.delete-icon {
+  color: #ff4d4d;
+}
+
 /* モバイルサイズで表示を切り替える */
 .mobile-hidden {
   display: block;

@@ -1,9 +1,50 @@
+<?php
+//１．PHP
+//select.phpのPHPコードをマルっとコピーしてきます。
+//※SQLとデータ取得の箇所を修正します。
+
+// 表示されないときのエラーチェック
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
+$id = $_GET["id"]; //?id~**を受け取る
+include("funcs.php");
+$pdo = db_conn();
+
+//２．データ登録SQL作成
+$stmt = $pdo->prepare("SELECT * FROM inquiries WHERE id=:id");
+$stmt->bindValue(":id", $id, PDO::PARAM_INT);
+$status = $stmt->execute();
+
+//３．データ表示
+if($status==false) {
+    sql_error($stmt);
+}else{
+    $row = $stmt->fetch();
+    // var_dump($row);
+}
+?>
+
+
+<!--
+２．HTML
+以下にindex.phpのHTMLをまるっと貼り付ける！
+理由：入力項目は「登録/更新」はほぼ同じになるからです。
+※form要素 input type="hidden" name="id" を１項目追加（非表示項目）
+※form要素 action="update.php"に変更
+※input要素 value="ここに変数埋め込み"
+
+<label>名前：<input type="text" name="name" value="<?=$row["name"]?>"></label>
+
+-->
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ記録</title>
+    <title>お問い合わせ記録（データ更新）</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
@@ -12,10 +53,10 @@
     <?php include("inc/menu.html"); ?>
     <section class="hero is-info">
         <p class="title has-text-centered mobile-hidden">
-          お問い合わせ記録 入力フォーム
+          お問い合わせ記録 編集フォーム
         </p>
         <p class="title has-text-centered mobile-visible">
-          お問い合わせ記録<br>入力フォーム
+          お問い合わせ記録<br>編集フォーム
         </p>
     </section>
     <section class="section">
@@ -31,7 +72,7 @@
         </header> -->
         <div class="card-content">
           <div class="form-container">
-            <form id="inquiryForm" action="insert.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <form id="inquiryForm" action="update.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
               <!-- 1行目 -->
               <div class="columns">
                 <div class="column is-one-thirds">
@@ -66,7 +107,7 @@
                   <div class="field">
                     <label class="label" for="user_id">記録者ID</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="number" id="user_id" name="user_id" required>
+                      <input class="input" type="number" id="user_id" name="user_id"  value="<?=$row["user_id"]?>" required>
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-user"></i>
                       </span>
@@ -80,7 +121,7 @@
                   <div class="field">
                     <label class="label" for="company_name">社名 <span class="has-text-danger">*</span></label>
                     <div class="control has-icons-left">
-                      <input class="input" type="text" id="company_name" name="company_name" required>
+                      <input class="input" type="text" id="company_name" name="company_name" value="<?=$row["company_name"]?>" required>
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-building"></i>
                       </span>
@@ -91,7 +132,7 @@
                   <div class="field">
                     <label class="label" for="contact_name">担当者名</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="text" id="contact_name" name="contact_name" required>
+                      <input class="input" type="text" id="contact_name" name="contact_name" value="<?=$row["contact_name"]?>" required>
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-user"></i>
                       </span>
@@ -105,7 +146,7 @@
                 <div class="columns">
                   <div class="column is-one-third">
                     <div class="control has-icons-left">
-                      <input class="input" type="tel" id="phone" name="phone" placeholder="電話番号">
+                      <input class="input" type="tel" id="phone" name="phone" placeholder="電話番号" value="<?=$row["phone"]?>">
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-phone"></i>
                       </span>
@@ -113,7 +154,7 @@
                   </div>
                   <div class="column is-two-thirds">
                     <div class="control has-icons-left">
-                      <input class="input" type="email" id="email" name="email" placeholder="メールアドレス">
+                      <input class="input" type="email" id="email" name="email" placeholder="メールアドレス" value="<?=$row["email"]?>">
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-envelope"></i>
                       </span>
@@ -125,7 +166,7 @@
               <div class="field">
                 <label class="label" for="inquiry_content">問い合わせ内容 <span class="has-text-danger">*</span></label>
                 <div class="control">
-                  <textarea class="textarea" id="inquiry_content" name="inquiry_content" rows="5" required></textarea>
+                  <textarea class="textarea" id="inquiry_content" name="inquiry_content" rows="5" required><?=$row["inquiry_content"]?></textarea>
                 </div>
               </div>
               <!-- 5行目 -->
@@ -154,7 +195,7 @@
               <div class="field">
                 <label class="label" for="inquiry_datetime">問い合わせ日時 <span class="has-text-danger">*</span></label>
                 <div class="control">
-                  <input class="input" type="datetime-local" id="inquiry_datetime" name="inquiry_datetime" value="<?php echo date('Y-m-d\TH:i'); ?>" required>
+                  <input class="input" type="datetime-local" id="inquiry_datetime" name="inquiry_datetime" value="<?=$row["inquiry_datetime"]?>" required>
                 </div>
               </div>
               <!-- ボタン -->
@@ -162,6 +203,7 @@
                 <div class="column is-two-thirds">
                   <div class="control">
                     <button type="submit" class="button is-primary is-fullwidth">送信</button>
+                    <input type="hidden" name="id" value="<?=$id?>">
                   </div>
                 </div>
                 <div class="column is-one-third">

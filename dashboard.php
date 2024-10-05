@@ -46,6 +46,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ダッシュボード</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
@@ -77,15 +78,16 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
           <thead>
             <tr>
               <th>ID</th>
-              <th>名前</th>
+              <th>記録者</th>
+              <th>社名</th>
+              <th>担当者名</th>
+              <th>電話</th>
               <th>メール</th>
-              <th>メッセージ</th>
-              <th>タグ</th>
-
-
-              <th>添付<br>ファイル</th>
-              <th>希望<br>対応</th>
-              <th>日時</th>
+              <th>元請会社名</th>
+              <th>内容</th>
+              <th>問合せ日時</th>
+              <th>問合せ方法</th>
+              <th></th><th></th>
             </tr>
           </thead>
           <tbody>
@@ -97,29 +99,24 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
             <?PHP foreach($values as $value): ?>
               <tr>
                 <td class="small-font"><?=$value["id"]?></td>
-                <td class="small-font"><?=$value["name"]?></td>
-                <td class="small-font"><?=$value["email"]?></td>
-                <td class="small-font"><?=$value["message"]?></td>
+                <td class="small-font"><?=h($value["user_id"])?></td>
+                <td class="small-font"><?=h($value["company_name"])?></td>
+                <td class="small-font"><?=h($value["contact_name"])?></td>
+                <td class="small-font"><?=h($value["phone"])?></td>
+                <td class="small-font"><?=h($value["email"])?></td>
+                <td class="small-font"><?=h($value["prime_contractor"])?></td>
+                <td class="small-font"><?=h($value["inquiry_content"])?></td>
+                <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
+                <td class="small-font"><?=h($value["contact_method"])?></td>
+                <!-- <td><a href="detail.php?id=<?=$value["id"]?>">[更新]</a></td>
+                <td><a href="delete.php?id=<?=$value["id"]?>">[削除]</a></td> -->
                 <td>
-                  <?php if (!empty($value["tags"])): ?>
-                  <?php
-                    $tags = explode(",", $value["tags"]);
-                          foreach ($tags as $tag) {
-                            echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span><br>';
-                          }; ?>
-                  <?php else: ?>
-                      ・・・
-                  <?php endif; ?>
+                  <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>
                 </td>
                 <td>
-                  <?php if (!empty($value["file_name"])): ?>
-                      <img src="upload/<?php echo htmlspecialchars($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
-                  <?php else: ?>
-                      ・・・
-                  <?php endif; ?>
+                    <!-- <a href="delete.php?id=<?= $value['id'] ?>"><i class="fas fa-trash-alt delete-icon"></i></a> -->
+                    <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
                 </td>
-                <td class="small-font"><?php echo htmlspecialchars($value["contact_method"]); ?></td>
-                <td class="small-font"><?php echo htmlspecialchars($value["created_at"]); ?></td>
               </tr>
             <?php endforeach; ?>
             <?php endif; ?>
@@ -212,6 +209,15 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
             }
         }
       });
+      
+      // 削除確認ダイアログ
+      function confirmDelete(id) {
+        if (confirm("本当に削除しますか？")) {
+            // OKで削除処理へ
+            window.location.href = "delete.php?id=" + id;
+        }
+        // キャンセルは閉じるのみ
+      }
     </script>
   </body>
 </html>
