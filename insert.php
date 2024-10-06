@@ -17,19 +17,29 @@ var_dump($user_id.$company_name.$contact_name.$phone.$email.$prime_contractor.$i
 include("funcs.php");
 $pdo=db_conn();
 
-// タグの抽出
-function assignTags($inquiry_content) {
+// タグづけ処理
+function assignTags($inquiry_content, $pdo) {
+    // DBからタグを取得
+    $sql = "SELECT tag_name FROM tags";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $db_tags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    
     $tags = [];
     $inquiry_content = trim($inquiry_content);
     
-    if (mb_strpos($inquiry_content, "アカウント") !== false || mb_strpos($inquiry_content, "パスワード") !== false|| mb_strpos($inquiry_content, "ID") !== false) $tags[] = "アカウント";
-    if (mb_strpos($inquiry_content, "添付ファイル") !== false || mb_strpos($inquiry_content, "ファイル添付") !== false|| mb_strpos($inquiry_content, "ファイル送信") !== false) $tags[] = "添付ファイル";
-    if (mb_strpos($inquiry_content, "サポート予約") !== false || mb_strpos($inquiry_content, "オンラインサポート") !== false) $tags[] = "サポート予約";
+    // 問い合わせ内容をタグづけ
+    foreach ($db_tags as $tag) {
+        if (mb_strpos($inquiry_content, $tag) !== false) {
+            $tags[] = $tag;
+        }
+    }
+    
     return $tags;
 }
 
-// タグを生成しカンマ区切りに
-$tags = assignTags($inquiry_content);
+// 該当タグをカンマ区切りに
+$tags = assignTags($inquiry_content, $pdo);
 $tags_string = implode(",", $tags);
 
 //３．データ登録SQL作成
