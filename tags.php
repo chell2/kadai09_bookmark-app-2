@@ -41,7 +41,7 @@ $tags = $stmt->fetchAll();
           </header>
           <div class="card-content">
             <div class="form-container">
-              <form id="tag_nameForm" action="update_tags.php" method="POST">
+              <form id="tag_nameForm" action="insert_tags.php" method="POST">
                 <div class="columns">
                   <div class="column">
                     <div class="field">
