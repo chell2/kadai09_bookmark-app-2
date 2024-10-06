@@ -108,14 +108,11 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                 <td class="small-font"><?=h($value["inquiry_content"])?></td>
                 <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
                 <td class="small-font"><?=h($value["contact_method"])?></td>
-                <!-- <td><a href="detail.php?id=<?=$value["id"]?>">[更新]</a></td>
-                <td><a href="delete.php?id=<?=$value["id"]?>">[削除]</a></td> -->
                 <td>
                   <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>
                 </td>
                 <td>
-                    <!-- <a href="delete.php?id=<?= $value['id'] ?>"><i class="fas fa-trash-alt delete-icon"></i></a> -->
-                    <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
+                  <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>

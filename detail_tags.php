@@ -1,7 +1,20 @@
 <?php
 //1.  DB接続
+$id = $_GET["id"]; //?id~**を受け取る
 include("funcs.php");
-$pdo=db_conn();
+$pdo = db_conn();
+
+//２．データ登録SQL作成
+$stmt = $pdo->prepare("SELECT * FROM tags WHERE id=:id");
+$stmt->bindValue(":id", $id, PDO::PARAM_INT);
+$status = $stmt->execute();
+
+//３．データ表示
+if($status==false) {
+    sql_error($stmt);
+}else{
+    $row = $stmt->fetch();
+}
 
 // タグの一覧取得
 $stmt = $pdo->query('SELECT * FROM tags');
@@ -13,7 +26,7 @@ $tags = $stmt->fetchAll();
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ記録（データ更新）</title>
+    <title>お問い合わせ記録（タグ更新）</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
@@ -32,7 +45,7 @@ $tags = $stmt->fetchAll();
       <div class="container">
         <div class="card">
           <header class="card-header">
-            <p class="card-header-title">タグの追加</p>
+            <p class="card-header-title">タグの編集</p>
             <div class="card-header-icon">
               <span class="icon">
                 <i class="fas fa-solid fa-truck-pickup has-text-info"></i>
@@ -45,9 +58,9 @@ $tags = $stmt->fetchAll();
                 <div class="columns">
                   <div class="column">
                     <div class="field">
-                      <label class="label" for="tag_name">新しいタグ名
+                      <label class="label" for="tag_name">ID: <?=$row["id"]?>
                       <div class="control has-icons-left">
-                        <input class="input" type="text" id="tag_name" name="tag_name" required>
+                        <input class="input" type="text" id="tag_name" name="tag_name" value="<?=$row["tag_name"]?>" required>
                         <span class="icon is-small is-left has-text-info">
                           <i class="fas fa-tag"></i>
                         </span>
@@ -57,7 +70,8 @@ $tags = $stmt->fetchAll();
                   <div class="column">
                     <div class="control">
                       <br>
-                      <button type="submit" class="button is-primary">追加</button>
+                      <button type="submit" class="button is-primary">更新</button>
+                      <input type="hidden" name="id" value="<?=$id?>">
                     </div>
                   </div>
                 </div>
@@ -75,7 +89,6 @@ $tags = $stmt->fetchAll();
             <tr>
               <th>ID</th>
               <th>タグ名</th>
-              <th></th><th></th>
             </tr>
           </thead>
           <tbody>
@@ -88,28 +101,12 @@ $tags = $stmt->fetchAll();
               <tr>
                 <td><?= $tag['id'] ?></td>
                 <td><?= htmlspecialchars($tag['tag_name']) ?></td>
-                <td>
-                  <a href="detail_tags.php?id=<?=$tag["id"]?>"><i class="fas fa-pencil-alt"></i></a>
-                </td>
-                <td>
-                  <a href="#" onclick="confirmDelete(<?= $tag['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
-                </td>
-              </tr>
             <?php endforeach; ?>
             <?php endif; ?>
           </tbody>
         </table>
       </div>
     </section>
-    <script>
-      // 削除確認ダイアログ
-      function confirmDelete(id) {
-        if (confirm("本当に削除しますか？")) {
-            // OKで削除処理へ
-            window.location.href = "delete_tags.php?id=" + id;
-        }
-        // キャンセルは閉じるのみ
-      }
-    </script>
   </body>
 </html>
+

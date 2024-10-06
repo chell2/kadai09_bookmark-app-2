@@ -1,5 +1,5 @@
 <?php
-//１．PHP
+//1.  DB接続
 //select.phpのPHPコードをマルっとコピーしてきます。
 //※SQLとデータ取得の箇所を修正します。
 
@@ -28,15 +28,12 @@ if($status==false) {
 
 
 <!--
-２．HTML
+4．HTML
 以下にindex.phpのHTMLをまるっと貼り付ける！
 理由：入力項目は「登録/更新」はほぼ同じになるからです。
 ※form要素 input type="hidden" name="id" を１項目追加（非表示項目）
 ※form要素 action="update.php"に変更
 ※input要素 value="ここに変数埋め込み"
-
-<label>名前：<input type="text" name="name" value="<?=$row["name"]?>"></label>
-
 -->
 
 <!DOCTYPE html>
@@ -62,14 +59,6 @@ if($status==false) {
     <section class="section">
       <div class="container">
         <div class="card">
-        <!-- <header class="card-header">
-          <p class="card-header-title">お問い合わせ記録</p>
-          <div class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-solid fa-truck-pickup has-text-info"></i>
-            </span>
-          </div>
-        </header> -->
         <div class="card-content">
           <div class="form-container">
             <form id="inquiryForm" action="update.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
