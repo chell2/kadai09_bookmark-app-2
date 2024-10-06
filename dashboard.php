@@ -85,6 +85,8 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
               <th>メール</th>
               <th>元請会社名</th>
               <th>内容</th>
+              <th>タグ</th>
+              <th>画像</th>
               <th>問合せ日時</th>
               <th>問合せ方法</th>
               <th></th><th></th>
@@ -106,6 +108,24 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                 <td class="small-font"><?=h($value["email"])?></td>
                 <td class="small-font"><?=h($value["prime_contractor"])?></td>
                 <td class="small-font"><?=h($value["inquiry_content"])?></td>
+                <td>
+                  <?php if (!empty($value["tags"])): ?>
+                  <?php
+                    $tags = explode(",", $value["tags"]);
+                          foreach ($tags as $tag) {
+                            echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span><br>';
+                          }; ?>
+                  <?php else: ?>
+                      ・・・
+                  <?php endif; ?>
+                </td>
+                <td>
+                  <?php if (!empty($value["file_name"])): ?>
+                      <img src="upload/<?php echo htmlspecialchars($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
+                  <?php else: ?>
+                      ・・・
+                  <?php endif; ?>
+                </td>
                 <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
                 <td class="small-font"><?=h($value["contact_method"])?></td>
                 <td>

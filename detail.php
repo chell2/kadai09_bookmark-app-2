@@ -158,28 +158,28 @@ if($status==false) {
                   <textarea class="textarea" id="inquiry_content" name="inquiry_content" rows="5" required><?=$row["inquiry_content"]?></textarea>
                 </div>
               </div>
+              <div class="field">
+                <!-- <label class="label" for="tags">タグ</label> -->
+                <?php if (!empty($row["tags"])): ?>
+                <?php
+                  $tags = explode(",", $row["tags"]);
+                        foreach ($tags as $tag) {
+                          echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span> ';
+                        }; ?>
+                <?php endif; ?>
+              </div>
               <!-- 5行目 -->
               <div class="field">
                 <label class="label">スクリーンショットなど（あれば）</label>
-                <!-- <div class="control">
+                <div class="control">
                   <input type="file" name="image[]" accept="image/*" multiple>
-                </div> -->
+                </div>
               </div>
-              <!-- 6行目 -->
-              <!-- <div class="field">
-              <div class="file has-name is-fullwidth">
-                <label class="file-label">
-                  <input class="file-input" type="file" name="image[]" accept="image/*" multiple onchange="updateFileName(this)" />
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                    </span>
-                    <span class="file-label"> ファイルを選択 </span>
-                  </span>
-                  <span class="file-name" id="file-name"> 選択されていません </span>
-                </label>
+              <div class="field">
+                  <?php if (!empty($row["file_name"])): ?>
+                      <img src="upload/<?php echo htmlspecialchars($row["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
+                  <?php endif; ?>
               </div>
-              </div> -->
               <!-- 7行目 -->
               <div class="field">
                 <label class="label" for="inquiry_datetime">問い合わせ日時 <span class="has-text-danger">*</span></label>
@@ -191,7 +191,7 @@ if($status==false) {
               <div class="columns">
                 <div class="column is-two-thirds">
                   <div class="control">
-                    <button type="submit" class="button is-primary is-fullwidth">送信</button>
+                    <button type="submit" class="button is-info is-fullwidth">更新</button>
                     <input type="hidden" name="id" value="<?=$id?>">
                   </div>
                 </div>

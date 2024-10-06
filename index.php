@@ -131,26 +131,11 @@
               <!-- 5行目 -->
               <div class="field">
                 <label class="label">スクリーンショットなど（あれば）</label>
-                <!-- <div class="control">
+                <div class="control">
                   <input type="file" name="image[]" accept="image/*" multiple>
-                </div> -->
+                </div>
               </div>
               <!-- 6行目 -->
-              <!-- <div class="field">
-              <div class="file has-name is-fullwidth">
-                <label class="file-label">
-                  <input class="file-input" type="file" name="image[]" accept="image/*" multiple onchange="updateFileName(this)" />
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
-                    </span>
-                    <span class="file-label"> ファイルを選択 </span>
-                  </span>
-                  <span class="file-name" id="file-name"> 選択されていません </span>
-                </label>
-              </div>
-              </div> -->
-              <!-- 7行目 -->
               <div class="field">
                 <label class="label" for="inquiry_datetime">問い合わせ日時 <span class="has-text-danger">*</span></label>
                 <div class="control">
