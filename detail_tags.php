@@ -73,8 +73,11 @@ $tags = $stmt->fetchAll();
                   <div class="column">
                     <div class="control">
                       <br>
-                      <button type="submit" class="button is-primary">更新</button>
-                      <input type="hidden" name="id" value="<?=$id?>">
+                      <div class="buttons">
+                          <button type="submit" class="button is-primary">更新</button>
+                          <input type="hidden" name="id" value="<?=$id?>">
+                          <button type="button" class="button is-info is-outlined" onclick="window.location.href='tags.php'">キャンセル</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -112,4 +115,3 @@ $tags = $stmt->fetchAll();
     </section>
   </body>
 </html>
-

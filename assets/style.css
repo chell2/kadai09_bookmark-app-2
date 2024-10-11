@@ -10,17 +10,17 @@ body {
 .form-container {
   max-width: 80%;
   margin: auto;
-  }
+}
   
 .chart-container {
   max-width: 70%;
   margin: auto;
-  }
+}
   
 .list-container {
-  max-width: 80%;
+  max-width: 90%;
   margin: auto;
-  }
+}
   
 .is-danger {
   border-color: #f14668;

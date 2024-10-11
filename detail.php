@@ -23,10 +23,21 @@ $status = $stmt->execute();
 //３．データ表示
 if($status==false) {
     sql_error($stmt);
-}else{
+  }else{
     $row = $stmt->fetch();
-    // var_dump($row);
-}
+  }
+
+//2-2. usersテーブルから記録者名を取得
+$stmt_user = $pdo->prepare("SELECT user_name, life_flg FROM users WHERE id=:user_id");
+$stmt_user->bindValue(":user_id", $row["user_id"], PDO::PARAM_INT);
+$status_user = $stmt_user->execute();
+
+//3-2．データ表示
+if ($status_user == false) {
+    sql_error($stmt_user);
+  } else {
+      $user_row = $stmt_user->fetch();
+  }
 ?>
 
 
@@ -69,7 +80,7 @@ if($status==false) {
               <div class="columns">
                 <div class="column is-one-thirds">
                   <div class="field">
-                    <label class="label">元請会社名</label>
+                    <label class="label">元請会社</label>
                     <div class="control">
                       <div class="select">
                         <select name="prime_contractor">
@@ -97,12 +108,13 @@ if($status==false) {
                 </div>
                 <div class="column is-one-thirds">
                   <div class="field">
-                    <label class="label" for="user_id">記録者ID</label>
-                    <div class="control has-icons-left">
-                      <input class="input" type="number" id="user_id" name="user_id"  value="<?=$row["user_id"]?>" required>
-                      <span class="icon is-small is-left has-text-info">
+                    <label class="label" for="user_id">記録者</label>
+                    <div class="control is-flex is-align-items-center ml-2" style="padding-top: 6px;">
+                      <input type="hidden" id="user_id" name="user_id" value="<?=$row["user_id"]?>" required>
+                      <span class="icon is-small is-left <?= $user_row['life_flg'] == 1 ? 'has-text-grey' : 'has-text-primary' ?>">
                         <i class="fas fa-user"></i>
                       </span>
+                      <span class="ml-3"><?=$user_row['user_name']?></span>
                     </div>
                   </div>
                 </div>
@@ -122,7 +134,7 @@ if($status==false) {
                 </div>
                 <div class="column is-one-third">
                   <div class="field">
-                    <label class="label" for="contact_name">担当者名</label>
+                    <label class="label" for="contact_name">担当者</label>
                     <div class="control has-icons-left">
                       <input class="input" type="text" id="contact_name" name="contact_name" value="<?=$row["contact_name"]?>" required>
                       <span class="icon is-small is-left has-text-info">
@@ -167,7 +179,7 @@ if($status==false) {
                 <?php
                   $tags = explode(",", $row["tags"]);
                         foreach ($tags as $tag) {
-                          echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span> ';
+                          echo '<span class="tag is-primary">' . h(trim($tag)) . '</span> ';
                         }; ?>
                 <?php endif; ?>
               </div>
@@ -180,7 +192,7 @@ if($status==false) {
               </div>
               <div class="field">
                   <?php if (!empty($row["file_name"])): ?>
-                      <img src="upload/<?php echo htmlspecialchars($row["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
+                      <img src="upload/<?php echo h($row["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
                   <?php endif; ?>
               </div>
               <!-- 7行目 -->
@@ -200,7 +212,14 @@ if($status==false) {
                 </div>
                 <div class="column is-one-third">
                   <div class="control">
-                    <button type="button" class="button is-info is-outlined is-fullwidth" onclick="clearForm()">クリア</button>
+                    <div class="columns">
+                      <div class="column is-half">
+                        <button type="button" class="button is-info is-outlined is-fullwidth" onclick="clearForm()">編集をクリア</button>
+                      </div>
+                      <div class="column is-half">
+                          <button type="button" class="button is-info is-outlined is-fullwidth" onclick="window.location.href='dashboard.php'">キャンセル</button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

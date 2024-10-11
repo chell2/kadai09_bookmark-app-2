@@ -37,11 +37,11 @@ $user_name = $_SESSION["user_name"];
               <div class="columns">
                 <div class="column is-one-thirds">
                   <div class="field">
-                    <label class="label">元請会社名</label>
+                    <label class="label">元請会社</label>
                     <div class="control">
                       <div class="select">
                         <select name="prime_contractor">
-                          <option value="" disabled selected>選択</option>
+                          <option value="" disabled selected>選択してください</option>
                           <option value="D建設">D建設</option>
                           <option value="S工業">S工業</option>
                           <option value="K工務店">K工務店</option>
@@ -70,7 +70,7 @@ $user_name = $_SESSION["user_name"];
                     <label class="label" for="user_id">記録者</label>
                     <div class="control is-flex is-align-items-center ml-2" style="padding-top: 6px;">
                       <input class="input" type="hidden" id="user_id" name="user_id" value="<?=$_SESSION['user_id']?>" required>
-                      <span class="icon is-small is-left has-text-info">
+                      <span class="icon is-small is-left has-text-primary">
                         <i class="fas fa-user"></i>
                       </span>
                       <span class="ml-3"><?=$user_name?></span>

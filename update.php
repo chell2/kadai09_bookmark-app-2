@@ -136,8 +136,8 @@ if ($update_status == false) {
 
 //４．データ登録処理後
 if($status==false){
-  sql_error($stmt);
+    sql_error($stmt);
 }else{
-  redirect("dashboard.php");
+    redirect("dashboard.php");
 }
 ?>

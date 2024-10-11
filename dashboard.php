@@ -77,71 +77,88 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
     <section>
       <div class="list-container block mt-5">
         <h1 class="title">お問い合わせ一覧</h1>
-        <table class="table is-striped is-fullwidth">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>記録者</th>
-              <th>社名</th>
-              <th>担当者名</th>
-              <th>電話</th>
-              <th>メール</th>
-              <th>元請会社名</th>
-              <th>内容</th>
-              <th>タグ</th>
-              <th>画像</th>
-              <th>問合せ日時</th>
-              <th>問合せ方法</th>
-              <th></th><th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if (empty($values)): ?>
+        <div style="overflow-x: auto;">
+          <table class="table is-striped is-fullwidth" style="table-layout: fixed; min-width: 1000px; width: 100%;">
+            <thead>
               <tr>
-                  <td colspan="8">データがありません。</td>
+                <th style="width:  3%;">ID</th>
+                <th style="width:  6%;">記録</th>
+                <th style="width: 11%;">社名</th>
+                <th style="width:  6%;">担当</th>
+                <th style="width:  8%;">電話</th>
+                <th style="width:  8%;">メール</th>
+                <th style="width:  6%;">元請</th>
+                <th style="width: 20%;">内容</th>
+                <th style="width: 10%;">タグ</th>
+                <!-- <th style="width: 12%;">画像</th> -->
+                <th style="width: 10%;">日時</th>
+                <th style="width:  6%;">方法</th>
+                <th style="width:  3%;"></th>
+                <th style="width:  3%;"></th>
               </tr>
-            <?php else: ?>
-            <?PHP foreach($values as $value): ?>
-              <tr>
-                <td class="small-font"><?=$value["id"]?></td>
-                <td class="small-font"><?=h($value["user_id"])?></td>
-                <td class="small-font"><?=h($value["company_name"])?></td>
-                <td class="small-font"><?=h($value["contact_name"])?></td>
-                <td class="small-font"><?=h($value["phone"])?></td>
-                <td class="small-font"><?=h($value["email"])?></td>
-                <td class="small-font"><?=h($value["prime_contractor"])?></td>
-                <td class="small-font"><?=h($value["inquiry_content"])?></td>
-                <td>
-                  <?php if (!empty($value["tags"])): ?>
-                  <?php
-                    $tags = explode(",", $value["tags"]);
-                          foreach ($tags as $tag) {
-                            echo '<span class="tag is-primary">' . htmlspecialchars(trim($tag)) . '</span><br>';
-                          }; ?>
-                  <?php else: ?>
-                      ・・・
-                  <?php endif; ?>
-                </td>
-                <td>
-                  <?php if (!empty($value["file_name"])): ?>
-                      <img src="upload/<?php echo htmlspecialchars($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
-                  <?php else: ?>
-                      ・・・
-                  <?php endif; ?>
-                </td>
-                <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
-                <td class="small-font"><?=h($value["contact_method"])?></td>
-                <td>
-                  <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>
-                </td>
-                <td>
-                  <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-            <?php endif; ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <?php if (empty($values)): ?>
+                <tr>
+                    <td colspan="8">データがありません。</td>
+                </tr>
+              <?php else: ?>
+              <?PHP foreach($values as $value): ?>
+              <?php
+                // 各行の user_id を使ってユーザー名を取得
+                $stmt_user = $pdo->prepare("SELECT user_name FROM users WHERE id=:user_id");
+                $stmt_user->bindValue(":user_id", $value["user_id"], PDO::PARAM_INT);
+                $status_user = $stmt_user->execute();
+                
+                if ($status_user == false) {
+                    sql_error($stmt_user);
+                    $user_name = "-"; // エラー時
+                } else {
+                    $user_row = $stmt_user->fetch();
+                    $user_name = $user_row ? h($user_row['user_name']) : "-";
+                }
+              ?>
+                <tr>
+                  <td class="small-font"><?=$value["id"]?></td>
+                  <td class="small-font"><?=$user_name?></td>
+                  <td class="small-font"><?=h($value["company_name"])?></td>
+                  <td class="small-font"><?=h($value["contact_name"])?></td>
+                  <td class="small-font" style="word-break:break-all;"><?=h($value["phone"])?></td>
+                  <td class="small-font" style="word-break:break-all;"><?=h($value["email"])?></td>
+                  <td class="small-font"><?=h($value["prime_contractor"])?></td>
+                  <td class="small-font"><?=h($value["inquiry_content"])?></td>
+                  <td>
+                    <?php if (!empty($value["tags"])): ?>
+                    <?php
+                      $tags = explode(",", $value["tags"]);
+                            foreach ($tags as $tag) {
+                              echo '<span class="tag is-primary">' . h(trim($tag)) . '</span><br>';
+                            }; ?>
+                    <?php else: ?>
+                        ・・・
+                    <?php endif; ?>
+                  </td>
+                  <!-- <td>
+                    <?php if (!empty($value["file_name"])): ?>
+                        <img src="upload/<?php echo h($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
+                    <?php else: ?>
+                        ・・・
+                    <?php endif; ?>
+                  </td> -->
+                  <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
+                  <td class="small-font"><?=h($value["contact_method"])?></td>
+                  <td>
+                    <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>
+                  </td>
+                  <td>
+                    <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+              <?php endif; ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
