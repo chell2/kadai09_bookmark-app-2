@@ -1,7 +1,10 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1.  DB接続
 $id = $_GET["id"]; //?id~**を受け取る
-include("funcs.php");
 $pdo = db_conn();
 
 //２．データ登録SQL作成

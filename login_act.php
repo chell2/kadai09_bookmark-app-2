@@ -1,13 +1,13 @@
 <?php
 //最初にSESSIONを開始！！ココ大事！！
 session_start();
+include("funcs.php");
 
 //POST値
 $user_email = $_POST["user_email"]; //lid
 $user_pw = $_POST["user_pw"]; //lpw
 
 //1.  DB接続します
-include("funcs.php");
 $pdo = db_conn();
 
 //2. データ登録SQL作成

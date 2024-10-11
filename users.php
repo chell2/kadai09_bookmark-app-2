@@ -1,6 +1,9 @@
 <?php
+session_start();
+
 // 1. DB接続
 include("funcs.php");
+sschk();
 $pdo = db_conn();
 
 // ユーザーの一覧取得

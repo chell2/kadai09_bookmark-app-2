@@ -1,4 +1,8 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1.  DB接続
 //select.phpのPHPコードをマルっとコピーしてきます。
 //※SQLとデータ取得の箇所を修正します。
@@ -9,7 +13,6 @@
 // error_reporting(E_ALL);
 
 $id = $_GET["id"]; //?id~**を受け取る
-include("funcs.php");
 $pdo = db_conn();
 
 //２．データ登録SQL作成

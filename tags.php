@@ -1,6 +1,9 @@
 <?php
-//1.  DB接続
+session_start();
 include("funcs.php");
+sschk();
+
+//1.  DB接続
 $pdo=db_conn();
 
 // タグの一覧取得

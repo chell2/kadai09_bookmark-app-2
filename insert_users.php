@@ -1,11 +1,10 @@
 <?php
 //$_SESSION使うよ！
-// session_start();
+session_start();
 
-//※htdocsと同じ階層に「includes」を作成してfuncs.phpを入れましょう！
 //include "../../includes/funcs.php";
 include "funcs.php";
-// sschk();
+sschk();
 
 //1. POSTデータ取得
 $user_name = filter_input( INPUT_POST, "user_name" );

@@ -1,6 +1,9 @@
 <?php
+session_start();
+include "funcs.php";
+sschk();
+
 //1.  DB接続
-include("funcs.php");
 $pdo=db_conn();
 
 //２．データ登録SQL作成

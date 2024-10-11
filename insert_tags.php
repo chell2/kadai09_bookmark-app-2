@@ -1,12 +1,15 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1. POSTデータ取得
 $tag_name = $_POST['tag_name'];
 
 // 確認
-var_dump($tag_name);
+// var_dump($tag_name);
 
 //2. DB接続
-include("funcs.php");
 $pdo=db_conn();
 
 //３．データ登録SQL作成

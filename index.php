@@ -1,5 +1,8 @@
 <?php
 session_start();
+include("funcs.php");
+sschk();
+
 $user_id = $_SESSION["user_id"];
 $user_name = $_SESSION["user_name"]; 
 ?>
@@ -27,14 +30,6 @@ $user_name = $_SESSION["user_name"];
     <section class="section">
       <div class="container">
         <div class="card">
-        <!-- <header class="card-header">
-          <p class="card-header-title">お問い合わせ記録</p>
-          <div class="card-header-icon">
-            <span class="icon">
-              <i class="fas fa-solid fa-truck-pickup has-text-info"></i>
-            </span>
-          </div>
-        </header> -->
         <div class="card-content">
           <div class="form-container">
             <form id="inquiryForm" action="insert.php" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">

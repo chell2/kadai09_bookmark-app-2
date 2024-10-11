@@ -1,4 +1,8 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1. POSTデータ取得
 $id = $_POST['id'];
 $user_name = $_POST['user_name'];
@@ -9,7 +13,6 @@ $life_flg = isset($_POST['life_flg']) ? $_POST['life_flg'] : 0;
 $user_pw = password_hash($user_pw, PASSWORD_DEFAULT);
 
 //2. DB接続
-include("funcs.php");
 $pdo=db_conn();
 
 //３．データ登録SQL作成

@@ -8,6 +8,10 @@
 //   bindValueにも「id」の項目を追加
 //4. header関数"Location"を「select.php」に変更
 
+session_start();
+include("funcs.php");
+sschk();
+
 //1. POSTデータ取得
 $id = $_POST['id'];
 $user_id = $_POST['user_id'];
@@ -21,7 +25,6 @@ $inquiry_datetime = $_POST['inquiry_datetime'];
 $contact_method = $_POST['contact_method'];
 
 //2. DB接続します
-include("funcs.php");
 $pdo = db_conn();
 
 // タグづけ処理

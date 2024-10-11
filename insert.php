@@ -1,4 +1,8 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1. POSTデータ取得
 $user_id = $_POST['user_id'];
 $company_name = $_POST['company_name'];
@@ -11,10 +15,9 @@ $inquiry_datetime = $_POST['inquiry_datetime'];
 $contact_method = $_POST['contact_method'];
 
 // 確認
-var_dump($user_id.$company_name.$contact_name.$phone.$email.$prime_contractor.$inquiry_content.$inquiry_datetime.$contact_method);
+// var_dump($user_id.$company_name.$contact_name.$phone.$email.$prime_contractor.$inquiry_content.$inquiry_datetime.$contact_method);
 
 //2. DB接続
-include("funcs.php");
 $pdo=db_conn();
 
 // タグづけ処理

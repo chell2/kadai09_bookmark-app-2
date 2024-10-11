@@ -1,9 +1,12 @@
 <?php
+session_start();
+include("funcs.php");
+sschk();
+
 //1. POSTデータ取得
 $id = $_GET["id"];
 
 //2. DB接続します
-include("funcs.php");
 $pdo = db_conn();
 
 //３．データ登録SQL作成
