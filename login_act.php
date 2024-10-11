@@ -34,6 +34,7 @@ if($pw){
   $_SESSION["chk_ssid"] = session_id();
   $_SESSION["is_admin"] = $val['is_admin'];
   $_SESSION["user_name"] = $val['user_name'];
+  $_SESSION["user_id"] = $val['id']; 
   //Login成功時（select.phpへ）
   redirect("index.php");
 

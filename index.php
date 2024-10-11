@@ -4,7 +4,10 @@ include("funcs.php");
 sschk();
 
 $user_id = $_SESSION["user_id"];
-$user_name = $_SESSION["user_name"]; 
+$user_name = $_SESSION["user_name"];
+$is_admin = $_SESSION["is_admin"];
+
+// echo "ユーザー情報: " . $user_id, $user_name, $is_admin;
 ?>
 
 <!DOCTYPE html>
@@ -37,10 +40,10 @@ $user_name = $_SESSION["user_name"];
               <div class="columns">
                 <div class="column is-one-thirds">
                   <div class="field">
-                    <label class="label">元請会社</label>
+                    <label class="label">元請会社 <span class="has-text-danger">*</span></label>
                     <div class="control">
                       <div class="select">
-                        <select name="prime_contractor">
+                        <select name="prime_contractor" required>
                           <option value="" disabled selected>選択してください</option>
                           <option value="D建設">D建設</option>
                           <option value="S工業">S工業</option>
@@ -69,7 +72,7 @@ $user_name = $_SESSION["user_name"];
                   <div class="field">
                     <label class="label" for="user_id">記録者</label>
                     <div class="control is-flex is-align-items-center ml-2" style="padding-top: 6px;">
-                      <input class="input" type="hidden" id="user_id" name="user_id" value="<?=$_SESSION['user_id']?>" required>
+                      <input class="input" type="hidden" id="user_id" name="user_id" value="<?=$user_id?>" required>
                       <span class="icon is-small is-left has-text-primary">
                         <i class="fas fa-user"></i>
                       </span>
@@ -168,7 +171,6 @@ $user_name = $_SESSION["user_name"];
 
     <script>
       function validateForm() {
-        const userIdInput = document.getElementById('user_id');
         const companyNameInput = document.getElementById('company_name');
         const phoneInput = document.getElementById('phone');
         const emailInput = document.getElementById('email');
@@ -177,7 +179,7 @@ $user_name = $_SESSION["user_name"];
         let valid = true;
 
         // 各フィールドのバリデーション
-        [userIdInput, companyNameInput, inquiryContentInput].forEach(input => {
+        [companyNameInput, inquiryContentInput].forEach(input => {
           if (input.value.trim() === "") {
             input.classList.add('is-danger');
             valid = false;
