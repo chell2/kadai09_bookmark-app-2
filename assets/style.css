@@ -8,13 +8,18 @@ body {
 }
 
 .form-container {
-  max-width: 65%;
-  margin: 0 auto;
+  max-width: 80%;
+  margin: auto;
   }
   
 .chart-container {
-  max-width: 75%;
-  margin: 0 auto;
+  max-width: 70%;
+  margin: auto;
+  }
+  
+.list-container {
+  max-width: 80%;
+  margin: auto;
   }
   
 .is-danger {
@@ -22,7 +27,7 @@ body {
   }
   
 .small-font {
-    font-size: 0.9rem !important;
+  font-size: 0.9rem !important;
 }
   
 .delete-icon {

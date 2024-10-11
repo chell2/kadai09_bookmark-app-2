@@ -1,3 +1,9 @@
+<?php
+session_start();
+$user_id = $_SESSION["user_id"];
+$user_name = $_SESSION["user_name"]; 
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -40,9 +46,11 @@
                     <div class="control">
                       <div class="select">
                         <select name="prime_contractor">
-                          <option value="D建設" selected>D建設</option>
+                          <option value="" disabled selected>選択</option>
+                          <option value="D建設">D建設</option>
                           <option value="S工業">S工業</option>
                           <option value="K工務店">K工務店</option>
+                          <option value="不明">不明</option>
                         </select>
                       </div>
                     </div>
@@ -64,12 +72,13 @@
                 </div>
                 <div class="column is-one-thirds">
                   <div class="field">
-                    <label class="label" for="user_id">記録者ID</label>
-                    <div class="control has-icons-left">
-                      <input class="input" type="number" id="user_id" name="user_id" required>
+                    <label class="label" for="user_id">記録者</label>
+                    <div class="control is-flex is-align-items-center ml-2" style="padding-top: 6px;">
+                      <input class="input" type="hidden" id="user_id" name="user_id" value="<?=$_SESSION['user_id']?>" required>
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-user"></i>
                       </span>
+                      <span class="ml-3"><?=$user_name?></span>
                     </div>
                   </div>
                 </div>
@@ -89,9 +98,9 @@
                 </div>
                 <div class="column is-one-third">
                   <div class="field">
-                    <label class="label" for="contact_name">担当者名</label>
+                    <label class="label" for="contact_name">担当者</label>
                     <div class="control has-icons-left">
-                      <input class="input" type="text" id="contact_name" name="contact_name" required>
+                      <input class="input" type="text" id="contact_name" name="contact_name" placeholder="名前">
                       <span class="icon is-small is-left has-text-info">
                         <i class="fas fa-user"></i>
                       </span>

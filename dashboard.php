@@ -72,7 +72,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
       </div>
     </section>
     <section>
-      <div class="chart-container block mt-5">
+      <div class="list-container block mt-5">
         <h1 class="title">お問い合わせ一覧</h1>
         <table class="table is-striped is-fullwidth">
           <thead>
