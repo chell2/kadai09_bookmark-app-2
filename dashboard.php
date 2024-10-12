@@ -83,15 +83,15 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
               <tr>
                 <th style="width:  3%;">ID</th>
                 <th style="width:  6%;">記録</th>
-                <th style="width: 11%;">社名</th>
+                <th style="width: 10%;">社名</th>
                 <th style="width:  6%;">担当</th>
                 <th style="width:  8%;">電話</th>
                 <th style="width:  8%;">メール</th>
-                <th style="width:  6%;">元請</th>
-                <th style="width: 20%;">内容</th>
+                <th style="width:  8%;">元請</th>
+                <th style="width: 21%;">内容</th>
                 <th style="width: 10%;">タグ</th>
                 <!-- <th style="width: 12%;">画像</th> -->
-                <th style="width: 10%;">日時</th>
+                <th style="width:  8%;">日時</th>
                 <th style="width:  6%;">方法</th>
                 <th style="width:  3%;"></th>
                 <th style="width:  3%;"></th>
@@ -145,7 +145,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                         ・・・
                     <?php endif; ?>
                   </td> -->
-                  <td class="small-font"><?=h($value["inquiry_datetime"])?></td>
+                  <td class="small-font"><?=date('Y/m/d H:i', strtotime(h($value["inquiry_datetime"])))?></td>
                   <td class="small-font"><?=h($value["contact_method"])?></td>
                   <td>
                     <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>

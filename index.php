@@ -7,6 +7,8 @@ $user_id = $_SESSION["user_id"];
 $user_name = $_SESSION["user_name"];
 $is_admin = $_SESSION["is_admin"];
 
+date_default_timezone_set('Asia/Tokyo');
+
 // echo "ユーザー情報: " . $user_id, $user_name, $is_admin;
 ?>
 
