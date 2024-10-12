@@ -24,14 +24,14 @@ $users = $stmt->fetchAll();
   <body>
     <?php include("inc/menu.html"); ?>
 
-    <section class="hero is-info">
+    <!-- <section class="hero is-info">
       <p class="title has-text-centered mobile-hidden">
         お問い合わせ記録 ユーザー管理
       </p>
       <p class="title has-text-centered mobile-visible">
         お問い合わせ記録<br>ユーザー管理
       </p>
-    </section>
+    </section> -->
 
     <section class="section">
       <div class="container">

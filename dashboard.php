@@ -47,7 +47,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ダッシュボード</title>
+    <title>お問い合わせ記録（ダッシュボード）</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
@@ -55,9 +55,9 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
-    <section class="hero is-info">
+    <!-- <section class="hero is-info">
       <p class="title has-text-centered">ダッシュボード</p>
-    </section>
+    </section> -->
     <section>
       <div class="chart-container block mt-5">
         <div class="columns is-8">

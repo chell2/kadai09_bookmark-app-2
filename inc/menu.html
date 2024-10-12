@@ -10,8 +10,7 @@
     display: block;
   }
   .navbar-burger span {
-  background-color: #209cee;
-  height: 2.5px;
+    height: 2px;
   }
   .navbar-burger {
     padding: 10px;
@@ -19,31 +18,67 @@
   body {
     padding-top: 2rem;
   }
+  
+  .navbar-item.is-active, .navbar-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
 </style>
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-burger js-burger" data-target="navbarBasicExample">
-    <span></span>
-    <span></span>
-    <span></span>
+
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <img src="assets/logo.png" alt="ロゴ" style="width: 140px; height: auto; margin: 0 15px;">
+    <div class="navbar-burger js-burger is-white" data-target="navbarBasicExample">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
+  
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="index.php"> 入力フォーム </a>
-      <a class="navbar-item" href="dashboard.php"> ダッシュボード </a>
-      <a class="navbar-item" href="tags.php"> タグ管理 </a>
-      <a class="navbar-item" href="users.php"> ユーザー管理 </a>
-      <a class="navbar-item" href="logout.php"> ログアウト </a>
+      <a class="navbar-item" href="index.php" id="formLink">入力フォーム</a>
+      <a class="navbar-item" href="dashboard.php" id="dashboardLink">ダッシュボード</a>
+      <a class="navbar-item" href="tags.php" id="tagsLink">タグ管理</a>
+      <a class="navbar-item" href="users.php" id="usersLink">ユーザー管理</a>
+    </div>
+    
+    <div class="navbar-end">
+      <a class="navbar-item" href="logout.php">
+        <i class="fas fa-solid fa-arrow-right-from-bracket mr-1"></i>ログアウト
+      </a>
     </div>
   </div>
 </nav>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const $burger = document.querySelector('.js-burger');
     const $menu = document.getElementById('navbarBasicExample');
+    
+    // アクティブなメニューの表示
+    const setActiveLink = (id) => {
+      const items = document.querySelectorAll('.navbar-item');
+      items.forEach(item => {
+        item.classList.remove('is-active');
+      });
+      const activeItem = document.getElementById(id);
+      if (activeItem) {
+        activeItem.classList.add('is-active');
+      }
+    };
 
+    // ハンバーガーメニューのイベント
     $burger.addEventListener('click', () => {
       $burger.classList.toggle('is-active');
       $menu.classList.toggle('is-active');
     });
+
+    // ページロード時にアクティブなリンクを設定
+    const currentUrl = window.location.pathname;
+    if (currentUrl.includes('index.php')) setActiveLink('formLink');
+    else if (currentUrl.includes('dashboard.php')) setActiveLink('dashboardLink');
+    else if (currentUrl.includes('tags.php')) setActiveLink('tagsLink');
+    else if (currentUrl.includes('users.php')) setActiveLink('usersLink');
   });
 </script>

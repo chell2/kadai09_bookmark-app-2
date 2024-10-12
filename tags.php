@@ -16,21 +16,21 @@ $tags = $stmt->fetchAll();
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お問い合わせ記録（データ更新）</title>
+    <title>お問い合わせ記録（タグ管理）</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
-    <section class="hero is-info">
+    <!-- <section class="hero is-info">
       <p class="title has-text-centered mobile-hidden">
           お問い合わせ記録 タグ管理
       </p>
       <p class="title has-text-centered mobile-visible">
           お問い合わせ記録<br>タグ管理
       </p>
-    </section>
+    </section> -->
     <section class="section">
       <div class="container">
         <div class="card">
