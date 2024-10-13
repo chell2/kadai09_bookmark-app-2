@@ -26,6 +26,7 @@
         <div class="columns is-centered">
           <div class="column is-4-desktop is-6-tablet">
             <div class="box">
+              <img src="./assets/logo.png" alt="ロゴ" class="logo">
               <form name="form1" action="login_act.php" method="post">
                 <div class="field">
                   <label class="label">ID</label>
