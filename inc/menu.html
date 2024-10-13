@@ -44,8 +44,28 @@
     </div>
     
     <div class="navbar-end">
-      <a class="navbar-item" href="logout.php">
-        <i class="fas fa-solid fa-arrow-right-from-bracket mr-1"></i>ログアウト
+      <form action="dashboard.php" method="GET" style="display: flex; align-items: center;">
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <input
+              class="input is-rounded is-small"
+              type="text"
+              name="search"
+              placeholder="お問い合わせ検索"
+            />
+          </div>
+          <div class="control">
+            <button class="button is-small is-rounded" type="submit">
+              <span class="icon has-text-info">
+                <i class="fas fa-search"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <a class="navbar-item ml-4 mr-2" href="logout.php">
+        <i class="fas fa-arrow-right-from-bracket mr-1"></i>
       </a>
     </div>
   </div>

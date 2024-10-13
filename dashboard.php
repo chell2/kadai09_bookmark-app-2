@@ -6,12 +6,23 @@ sschk();
 //1.  DB接続
 $pdo=db_conn();
 
-//２．データ登録SQL作成
-$sql = 'SELECT * FROM inquiries';
+// 検索キーワードの取得
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// SQLの準備 (検索条件を追加)
+$sql = 'SELECT * FROM inquiries WHERE 
+        company_name LIKE :search OR 
+        contact_name LIKE :search OR 
+        phone LIKE :search OR 
+        email LIKE :search OR 
+        prime_contractor LIKE :search OR 
+        inquiry_content LIKE :search';
 $stmt = $pdo->prepare($sql);
+$stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
+
 $status = $stmt->execute(); //true or false
 
-//３．データ表示
+// データ表示
 $view="";
 if($status==false) {
   //execute（SQL実行時にエラーがある場合）
@@ -19,8 +30,8 @@ if($status==false) {
   exit("SQL_ERROR:".$error[2]);
 }
 
-//全データ取得
-$values =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+// 全データ取得
+$values = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // タグの件数を集計
 $tag_counts = [];
@@ -78,23 +89,23 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
       <div class="list-container block mt-5">
         <h1 class="title">お問い合わせ一覧</h1>
         <div style="overflow-x: auto;">
-          <table class="table is-striped is-fullwidth" style="table-layout: fixed; min-width: 1000px; width: 100%;">
+          <table id="inquiries_table" class="table is-striped is-fullwidth" style="table-layout: fixed; min-width: 1000px; width: 100%;">
             <thead>
               <tr>
-                <th style="width:  3%;">ID</th>
-                <th style="width:  6%;">記録</th>
-                <th style="width: 10%;">社名</th>
-                <th style="width:  6%;">担当</th>
-                <th style="width:  8%;">電話</th>
-                <th style="width:  8%;">メール</th>
-                <th style="width:  8%;">元請</th>
-                <th style="width: 21%;">内容</th>
-                <th style="width: 10%;">タグ</th>
+                <th data-idx="0" class="sortable" style="width:  3%;">ID</th>
+                <th data-idx="1" class="sortable" style="width:  6%;">記録</th>
+                <th data-idx="2" class="sortable" style="width: 10%;">社名</th>
+                <th data-idx="3" class="sortable" style="width:  6%;">担当</th>
+                <th data-idx="4" data-no-sort="true" style="width:  8%;">電話</th>
+                <th data-idx="5" data-no-sort="true" style="width:  8%;">メール</th>
+                <th data-idx="6" class="sortable" style="width:  8%;">元請</th>
+                <th data-idx="7" data-no-sort="true" style="width: 21%;">内容</th>
+                <th data-idx="8" class="sortable" style="width: 10%;">タグ</th>
                 <!-- <th style="width: 12%;">画像</th> -->
-                <th style="width:  8%;">日時</th>
-                <th style="width:  6%;">方法</th>
-                <th style="width:  3%;"></th>
-                <th style="width:  3%;"></th>
+                <th data-idx="9" class="sortable" style="width:  8%;">日時</th>
+                <th data-idx="10" class="sortable" style="width:  6%;">方法</th>
+                <th data-idx="11" data-no-sort="true" style="width:  3%;"></th>
+                <th data-idx="12" data-no-sort="true" style="width:  3%;"></th>
               </tr>
             </thead>
             <tbody>
@@ -148,7 +159,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                   <td class="small-font"><?=date('Y/m/d H:i', strtotime(h($value["inquiry_datetime"])))?></td>
                   <td class="small-font"><?=h($value["contact_method"])?></td>
                   <td>
-                    <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="detail.php?id=<?=$value["id"]?>"><i class="fas fa-pencil-alt edit-icon"></i></a>
                   </td>
                   <td>
                     <a href="#" onclick="confirmDelete(<?= $value['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
@@ -255,6 +266,36 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
         }
         // キャンセルは閉じるのみ
       }
+      
+      // リストの並び替え
+      document.addEventListener('DOMContentLoaded', () => {
+        const getCellValue = (row, idx) => row.cells[idx].innerText;
+
+        const comparer = (idx, asc) => (a, b) =>
+          ((v1, v2) =>
+            v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2)
+              ? v1 - v2
+              : v1.toString().localeCompare(v2))(
+            getCellValue(asc ? a : b, idx),
+            getCellValue(asc ? b : a, idx)
+          );
+
+        document.querySelectorAll('#inquiries_table th').forEach((th) =>
+          th.addEventListener('click', () => {
+            // 並び替え禁止の列をチェック
+            if (th.dataset.noSort === "true") return;
+
+            const table = th.closest('table');
+            const tbody = table.querySelector('tbody');
+            const idx = Array.from(th.parentNode.children).indexOf(th);
+            const asc = th.classList.toggle('asc', !th.classList.contains('asc'));
+
+            Array.from(tbody.querySelectorAll('tr'))
+              .sort(comparer(idx, asc))
+              .forEach((tr) => tbody.appendChild(tr));
+          })
+        );
+      });
     </script>
   </body>
 </html>

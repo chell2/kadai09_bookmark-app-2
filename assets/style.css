@@ -29,8 +29,12 @@ body {
   font-size: 0.9rem !important;
 }
   
+.edit-icon {
+  color: #3F8ED0;
+}
+
 .delete-icon {
-  color: #ff4d4d;
+  color: #f14668;
 }
 
 /* モバイルサイズで表示を切り替える */
@@ -49,4 +53,22 @@ body {
   .mobile-visible {
     display: block;
   }
+}
+
+/* テーブルヘッダー */
+#inquiries_table th {
+    position: relative;
+}
+
+#inquiries_table th.sortable::after {
+    content: '▲▼';
+    position: absolute;
+    top: 26px;
+    font-size: 0.6em;
+    color: #3F8ED0;
+    display: inline-block;
+}
+
+#inquiries_table th.no-sort::after {
+    content: ''; /* ▲▼非表示 */
 }
