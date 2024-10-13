@@ -13,12 +13,12 @@ body {
   
 .chart-container {
   max-width: 70%;
-  margin: auto;
+  margin: 50px auto;
 }
   
 .list-container {
   max-width: 90%;
-  margin: auto;
+  margin: 20px auto;
 }
   
 .is-danger {

@@ -70,7 +70,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
       <p class="title has-text-centered">ダッシュボード</p>
     </section> -->
     <section>
-      <div class="chart-container block mt-5">
+      <div class="chart-container">
         <div class="columns is-8">
           <div class="column">
               <h2 class="subtitle">お問い合わせ件数</h2>
@@ -86,7 +86,7 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
       </div>
     </section>
     <section>
-      <div class="list-container block mt-5">
+      <div class="list-container">
         <h1 class="title">お問い合わせ一覧</h1>
         <div style="overflow-x: auto;">
           <table id="inquiries_table" class="table is-striped is-fullwidth" style="table-layout: fixed; min-width: 1000px; width: 100%;">
