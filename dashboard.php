@@ -10,13 +10,17 @@ $pdo=db_conn();
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // SQLの準備 (検索条件を追加)
-$sql = 'SELECT * FROM inquiries WHERE 
+$sql = 'SELECT inquiries.*, users.user_name 
+        FROM inquiries LEFT JOIN users ON inquiries.user_id = users.id 
+        WHERE 
         company_name LIKE :search OR 
         contact_name LIKE :search OR 
         phone LIKE :search OR 
         email LIKE :search OR 
         prime_contractor LIKE :search OR 
-        inquiry_content LIKE :search';
+        inquiry_content LIKE :search OR 
+        users.user_name LIKE :search'; // 記録者名の検索
+        
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':search', '%' . $search . '%', PDO::PARAM_STR);
 
