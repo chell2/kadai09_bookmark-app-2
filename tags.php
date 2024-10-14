@@ -31,6 +31,8 @@ $tags = $stmt->fetchAll();
           お問い合わせ記録<br>タグ管理
       </p>
     </section> -->
+    
+    <?php if ($_SESSION['is_admin'] == 1): ?>
     <section class="section">
       <div class="container">
         <div class="card">
@@ -70,6 +72,8 @@ $tags = $stmt->fetchAll();
         </div>
       </div>
     </section>
+    <?php endif; ?>
+    
     <section class="section">
       <div class="chart-container block mt-5">
         <h1 class="title">タグ一覧</h1>
@@ -92,10 +96,14 @@ $tags = $stmt->fetchAll();
                 <td><?= $tag['id'] ?></td>
                 <td><?= htmlspecialchars($tag['tag_name']) ?></td>
                 <td>
-                  <a href="detail_tags.php?id=<?=$tag["id"]?>"><i class="fas fa-pencil-alt"></i></a>
+                  <?php if ($_SESSION['is_admin'] == 1): ?>
+                    <a href="detail_tags.php?id=<?=$tag["id"]?>"><i class="fas fa-pencil-alt"></i></a>
+                  <?php endif; ?>
                 </td>
                 <td>
-                  <a href="#" onclick="confirmDelete(<?= $tag['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
+                  <?php if ($_SESSION['is_admin'] == 1): ?>
+                    <a href="#" onclick="confirmDelete(<?= $tag['id'] ?>)"><i class="fas fa-trash-alt delete-icon"></i></a>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endforeach; ?>

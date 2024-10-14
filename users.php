@@ -33,6 +33,7 @@ $users = $stmt->fetchAll();
       </p>
     </section> -->
 
+    <?php if ($_SESSION['is_admin'] == 1): ?>
     <section class="section">
       <div class="container">
         <div class="card">
@@ -106,6 +107,7 @@ $users = $stmt->fetchAll();
         </div>
       </div>
     </section>
+    <?php endif; ?>
 
     <section class="section">
       <div class="list-container block mt-5">
@@ -139,7 +141,9 @@ $users = $stmt->fetchAll();
                   <?php endif; ?>
                 </td>
                 <td>
+                <?php if ($_SESSION['is_admin'] == 1): ?>
                   <a href="detail_users.php?id=<?= htmlspecialchars($user['id']) ?>"><i class="fas fa-pencil-alt"></i></a>
+                <?php endif; ?>
                 </td>
               </tr>
               <?php endforeach; ?>
