@@ -1,6 +1,7 @@
 <?php
 //必ずsession_startは最初に記述
 session_start();
+include("funcs.php");
 
 //SESSIONを初期化（空っぽにする）
 $_SESSION = array();
@@ -13,7 +14,7 @@ if (isset($_COOKIE[session_name()])) { //session_name()は、セッションID�
 //サーバ側での、セッションIDの破棄
 session_destroy();
 
-//処理後、index.phpへリダイレクト
+//処理後、login.phpへリダイレクト
 redirect("login.php");
 
 ?>
