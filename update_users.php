@@ -32,6 +32,20 @@ $inserted_id = $pdo->lastInsertId();
 if ($status == false) {
     sql_error($stmt);
 } else {
-    redirect("users.php");
+    // life_flgが1の場合、ログアウト処理を実行
+    if ($life_flg == 1) {
+        // セッションの初期化〜破棄
+        $_SESSION = array();
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 42000, '/');
+        }
+        session_destroy();
+        // 処理後リダイレクト
+        redirect("login.php");
+        exit();
+    } else {
+        // 通常はusersへ戻る
+        redirect("users.php");
+    }
 }
 ?>

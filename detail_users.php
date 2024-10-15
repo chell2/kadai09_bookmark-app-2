@@ -71,11 +71,11 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                  <!-- 管理者と一般で表示切り替え -->
-                  <?php if ($_SESSION['is_admin'] == 1): ?>
                   <div class="column">
                     <div class="field">
                       <div class="control"><b>種別：</b>
+                      <!-- 管理者と一般で表示切り替え -->
+                      <?php if ($_SESSION['is_admin'] == 1): ?>
                         <?php if ($row["is_admin"] == 0): ?>
                           <label class="radio">
                             <input type="radio" name="is_admin" value="0" checked> 一般
@@ -91,10 +91,14 @@ $users = $stmt->fetchAll();
                             <input type="radio" name="is_admin" value="1" checked> 管理者
                           </label>
                         <?php endif; ?>
+                      <?php else : ?>
+                          <label class="radio">
+                            <input type="radio" name="is_admin" value="0" checked> 一般
+                          </label>
+                      <?php endif; ?>
                       </div>
                     </div>
                   </div>
-                  <?php endif; ?>
                   <div class="column">
                     <div class="field">
                       <div class="control"><b>アカウントの削除：</b>
@@ -121,7 +125,7 @@ $users = $stmt->fetchAll();
                   <div class="column">
                     <div class="field">
                       <div class="control has-icons-left">
-                        <input class="input" type="password" id="user_pw" name="user_pw" required>
+                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="変更後のパスワード" required>
                         <span class="icon is-small is-left has-text-info">
                           <i class="fas fa-key"></i>
                         </span>
