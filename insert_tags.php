@@ -24,14 +24,10 @@ $inserted_id = $pdo->lastInsertId();
 
 //４．データ登録処理後
 if($status==false){
-    //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
-    $error = $stmt->errorInfo();
-    exit("SQL_ERROR:".$error[2]);
+    sql_error($stmt);
 }else{
     //５．index.phpへリダイレクト
-    header("Location: tags.php");
-    // redirect("tags.php");
-    exit();
+    redirect("tags.php");
 }
 
 ?>

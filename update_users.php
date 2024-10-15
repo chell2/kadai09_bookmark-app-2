@@ -42,7 +42,6 @@ if ($status == false) {
         session_destroy();
         // 処理後リダイレクト
         redirect("login.php");
-        exit();
     } else {
         // 通常はusersへ戻る
         redirect("users.php");

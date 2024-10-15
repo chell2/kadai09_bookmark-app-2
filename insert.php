@@ -117,14 +117,11 @@ if ($update_status == false) {
 
 //４．データ登録処理後
 if($status==false){
-    //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）
-    $error = $stmt->errorInfo();
-    exit("SQL_ERROR:".$error[2]);
+    //SQL実行時にエラーがある場合（エラーオブジェクト取得して表示）:funcsで関数化
+    sql_error($stmt);
 }else{
-    //５．index.phpへリダイレクト
-    header("Location: index.php");
-    // redirect("index.php");
-    exit();
+    //５．index.phpへリダイレクト:funcsで関数化
+    redirect("index.php");
 }
 
 ?>
