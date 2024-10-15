@@ -6,10 +6,17 @@ sschk();
 $user_id = $_SESSION["user_id"];
 $user_name = $_SESSION["user_name"];
 $is_admin = $_SESSION["is_admin"];
+// echo "ユーザー情報: " . $user_id, $user_name, $is_admin;
 
 date_default_timezone_set('Asia/Tokyo');
 
-// echo "ユーザー情報: " . $user_id, $user_name, $is_admin;
+// 1. DB接続
+$pdo = db_conn();
+
+// 2. データ取得SQL作成（life_flg=0のみ）
+$stmt = $pdo->prepare("SELECT * FROM prime_contractors WHERE life_flg = 0");
+$status = $stmt->execute();
+$prime_contractors = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -39,9 +46,11 @@ date_default_timezone_set('Asia/Tokyo');
                       <div class="select">
                         <select name="prime_contractor" required>
                           <option value="" disabled selected>選択してください</option>
-                          <option value="D建設">D建設</option>
-                          <option value="S工業">S工業</option>
-                          <option value="K工務店">K工務店</option>
+                          <?php foreach ($prime_contractors as $contractor): ?>
+                            <option value="<?= htmlspecialchars($contractor['name']) ?>">
+                              <?= htmlspecialchars($contractor['name']) ?>
+                            </option>
+                          <?php endforeach; ?>
                           <option value="不明">不明</option>
                         </select>
                       </div>
