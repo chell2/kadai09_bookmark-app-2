@@ -73,6 +73,16 @@ $users = $stmt->fetchAll();
                   </div>
                   <div class="column">
                     <div class="field">
+                      <div class="control has-icons-left">
+                        <input class="input" type="email" id="user_email" name="user_email" value="<?=$row["user_email"]?>" required>
+                        <span class="icon is-small is-left has-text-info">
+                          <i class="fas fa-envelope"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="field">
                       <div class="control"><b>種別：</b>
                       <!-- 管理者と一般で表示切り替え -->
                       <?php if ($_SESSION['is_admin'] == 1): ?>
@@ -85,8 +95,8 @@ $users = $stmt->fetchAll();
                           </label>
                         <?php else : ?>
                           <label class="radio">
-                            <input type="radio" name="is_admin" value="0"> 一般
-                          </label>　
+                            <input type="radio" name="is_admin" value="0"> 一般 
+                          </label>
                           <label class="radio">
                             <input type="radio" name="is_admin" value="1" checked> 管理者
                           </label>
@@ -99,25 +109,16 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                  <div class="column">
-                    <div class="field">
-                      <div class="control"><b>アカウントの削除：</b>
-                        <label class="checkbox">
-                          <input type="hidden" name="life_flg" value="0" />
-                          <input type="checkbox" id="lifeFlgCheckbox" name="life_flg" value="1" <?php if ($row["life_flg"] == 1) echo 'checked'; ?> />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
                 </div>
                 <!-- 2行目 -->
                 <div class="columns">
+
                   <div class="column">
                     <div class="field">
                       <div class="control has-icons-left">
-                        <input class="input" type="email" id="user_email" name="user_email" value="<?=$row["user_email"]?>" required>
+                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="現在のパスワード" required>
                         <span class="icon is-small is-left has-text-info">
-                          <i class="fas fa-envelope"></i>
+                          <i class="fas fa-key"></i>
                         </span>
                       </div>
                     </div>
@@ -125,8 +126,8 @@ $users = $stmt->fetchAll();
                   <div class="column">
                     <div class="field">
                       <div class="control has-icons-left">
-                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="変更後のパスワード" required>
-                        <span class="icon is-small is-left has-text-info">
+                        <input class="input" type="password" id="new_pw" name="new_pw" placeholder="新しいパスワード(変更時のみ)">
+                        <span class="icon is-small is-left has-text-warning">
                           <i class="fas fa-key"></i>
                         </span>
                       </div>
@@ -138,6 +139,19 @@ $users = $stmt->fetchAll();
                         <button type="submit" class="button is-primary">更新</button>
                         <input type="hidden" name="id" value="<?=$id?>">
                         <button type="button" class="button is-info is-outlined" onclick="window.location.href='users.php'">キャンセル</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3行目 -->
+                <div class="columns">
+                  <div class="column">
+                    <div class="field">
+                      <div class="control"><b>アカウントの削除：</b>
+                        <label class="checkbox">
+                          <input type="hidden" name="life_flg" value="0" />
+                          <input type="checkbox" id="lifeFlgCheckbox" name="life_flg" value="1" <?php if ($row["life_flg"] == 1) echo 'checked'; ?> />
+                        </label>
                       </div>
                     </div>
                   </div>
