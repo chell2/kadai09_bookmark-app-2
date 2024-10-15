@@ -40,7 +40,6 @@ if ($status_user == false) {
   }
 ?>
 
-
 <!--
 4．HTML
 以下にindex.phpのHTMLをまるっと貼り付ける！
@@ -62,14 +61,6 @@ if ($status_user == false) {
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
-    <!-- <section class="hero is-info">
-        <p class="title has-text-centered mobile-hidden">
-          お問い合わせ記録 編集フォーム
-        </p>
-        <p class="title has-text-centered mobile-visible">
-          お問い合わせ記録<br>編集フォーム
-        </p>
-    </section> -->
     <section class="section">
       <div class="container">
         <div class="card">
@@ -83,10 +74,11 @@ if ($status_user == false) {
                     <label class="label">元請会社</label>
                     <div class="control">
                       <div class="select">
-                        <select name="prime_contractor">
-                          <option value="D建設" selected>D建設</option>
-                          <option value="S工業">S工業</option>
-                          <option value="K工務店">K工務店</option>
+                        <select name="prime_contractor" required>
+                          <option value="D建設" <?= $row["prime_contractor"] === "D建設" ? 'selected' : '' ?>>D建設</option>
+                          <option value="S工業" <?= $row["prime_contractor"] === "S工業" ? 'selected' : '' ?>>S工業</option>
+                          <option value="K工務店" <?= $row["prime_contractor"] === "K工務店" ? 'selected' : '' ?>>K工務店</option>
+                          <option value="不明" <?= $row["prime_contractor"] === "不明" ? 'selected' : '' ?>>不明</option>
                         </select>
                       </div>
                     </div>
@@ -98,9 +90,9 @@ if ($status_user == false) {
                     <div class="control">
                       <div class="select">
                         <select name="contact_method">
-                          <option value="電話" selected>電話</option>
-                          <option value="メール">メール</option>
-                          <option value="その他">その他</option>
+                          <option value="電話" <?= $row["contact_method"] === "電話" ? 'selected' : '' ?>>電話</option>
+                          <option value="メール" <?= $row["contact_method"] === "メール" ? 'selected' : '' ?>>メール</option>
+                          <option value="その他" <?= $row["contact_method"] === "その他" ? 'selected' : '' ?>>その他</option>
                         </select>
                       </div>
                     </div>

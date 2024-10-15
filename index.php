@@ -24,14 +24,6 @@ date_default_timezone_set('Asia/Tokyo');
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
-    <!-- <section class="hero is-info">
-        <p class="title has-text-centered mobile-hidden">
-          お問い合わせ記録 入力フォーム
-        </p>
-        <p class="title has-text-centered mobile-visible">
-          お問い合わせ記録<br>入力フォーム
-        </p>
-    </section> -->
     <section class="section">
       <div class="container">
         <div class="card">

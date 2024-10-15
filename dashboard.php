@@ -70,9 +70,6 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
   </head>
   <body>
     <?php include("inc/menu.html"); ?>
-    <!-- <section class="hero is-info">
-      <p class="title has-text-centered">ダッシュボード</p>
-    </section> -->
     <section>
       <div class="chart-container">
         <div class="columns is-8">
@@ -103,13 +100,13 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                 <th data-idx="4" data-no-sort="true" style="width:  8%;">電話</th>
                 <th data-idx="5" data-no-sort="true" style="width:  8%;">メール</th>
                 <th data-idx="6" class="sortable" style="width:  8%;">元請</th>
-                <th data-idx="7" data-no-sort="true" style="width: 21%;">内容</th>
-                <th data-idx="8" class="sortable" style="width: 10%;">タグ</th>
-                <!-- <th style="width: 12%;">画像</th> -->
-                <th data-idx="9" class="sortable" style="width:  8%;">日時</th>
-                <th data-idx="10" class="sortable" style="width:  6%;">方法</th>
-                <th data-idx="11" data-no-sort="true" style="width:  3%;"></th>
+                <th data-idx="7" data-no-sort="true" style="width: 18%;">内容</th>
+                <th data-idx="8" data-no-sort="true" style="width: 4%;"></th>
+                <th data-idx="9" class="sortable" style="width: 10%;">タグ</th>
+                <th data-idx="10" class="sortable" style="width:  8%;">日時</th>
+                <th data-idx="11" class="sortable" style="width:  6%;">方法</th>
                 <th data-idx="12" data-no-sort="true" style="width:  3%;"></th>
+                <th data-idx="13" data-no-sort="true" style="width:  3%;"></th>
               </tr>
             </thead>
             <tbody>
@@ -143,23 +140,21 @@ $json = json_encode($values, JSON_UNESCAPED_UNICODE);
                   <td class="small-font"><?=h($value["prime_contractor"])?></td>
                   <td class="small-font"><?=h($value["inquiry_content"])?></td>
                   <td>
+                    <?php if (!empty($value["file_name"])): ?>
+                      <i class="fas fa-regular fa-images has-text-grey"></i>
+                    <?php endif; ?>
+                  </td>
+                  <td>
                     <?php if (!empty($value["tags"])): ?>
                     <?php
                       $tags = explode(",", $value["tags"]);
                             foreach ($tags as $tag) {
                               echo '<span class="tag is-primary">' . h(trim($tag)) . '</span><br>';
                             }; ?>
-                    <?php else: ?>
-                        ・・・
+                    <?php else : ?>
+                    　-
                     <?php endif; ?>
                   </td>
-                  <!-- <td>
-                    <?php if (!empty($value["file_name"])): ?>
-                        <img src="upload/<?php echo h($value["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
-                    <?php else: ?>
-                        ・・・
-                    <?php endif; ?>
-                  </td> -->
                   <td class="small-font"><?=date('Y/m/d H:i', strtotime(h($value["inquiry_datetime"])))?></td>
                   <td class="small-font"><?=h($value["contact_method"])?></td>
                   <td>
