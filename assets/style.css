@@ -37,18 +37,17 @@ body {
   color: #f14668;
 }
 
+.password-control {
+  position: relative;
+}
 
-    .password-control {
-      position: relative;
-    }
-    .password-control .eye-icon {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-    }
-
+.password-control .eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
   
 /* モバイルサイズで表示を切り替える */
 .mobile-hidden {
