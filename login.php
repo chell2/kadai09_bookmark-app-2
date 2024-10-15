@@ -28,17 +28,23 @@
             <div class="box">
               <img src="./assets/logo.png" alt="ロゴ" class="logo">
               <form name="form1" action="login_act.php" method="post">
-                <div class="field">
-                  <label class="label">ID</label>
-                  <div class="control">
+                <div class="field mt-4">
+                  <label class="label"></label>
+                  <div class="control has-icons-left">
                     <input class="input" type="text" name="user_email" placeholder="メールアドレス">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-envelope has-text-info"></i>
+                    </span>
                   </div>
                 </div>
-                <div class="field password-control">
-                  <label class="label">PW</label>
-                  <div class="control">
-                    <input class="input" type="password" name="user_pw" id="password" placeholder="パスワード">
-                    <i class="fas fa-eye-slash eye-icon" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                <div class="field password-control mt-4">
+                  <label class="label"></label>
+                  <div class="control has-icons-left">
+                    <input class="input" type="password" name="user_pw" id="login_pw" placeholder="パスワード">
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-key has-text-info"></i>
+                    </span>
+                    <i id="eyeIcon_l" class="fas fa-eye-slash eye-icon has-text-grey" style="cursor: pointer;" onclick="togglePasswordVisibility('login_pw','eyeIcon_l')"></i>
                   </div>
                 </div>
                 <div class="field mt-4">
@@ -53,21 +59,6 @@
       </div>
     </div>
   </section>
-
-  <script>
-    function togglePasswordVisibility() {
-      const passwordInput = document.getElementById('password');
-      const eyeIcon = document.getElementById('togglePassword');
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        eyeIcon.classList.remove('fa-eye-slash');
-        eyeIcon.classList.add('fa-eye');
-      } else {
-        passwordInput.type = 'password';
-        eyeIcon.classList.remove('fa-eye');
-        eyeIcon.classList.add('fa-eye-slash');
-      }
-    }
-  </script>
+  <script src="./assets/script.js"></script>
 </body>
 </html>

@@ -49,8 +49,8 @@ $users = $stmt->fetchAll();
             <div class="form-container">
               <form id="tag_nameForm" action="insert_users.php" method="POST">
                 <!-- 1行目 -->
-                <div class="columns is-align-items-center">
-                  <div class="column is-one-third">
+                <div class="columns">
+                  <div class="column">
                     <div class="field">
                       <div class="control has-icons-left">
                         <input class="input" type="text" id="user_name" name="user_name" placeholder="ユーザー名" required>
@@ -60,7 +60,35 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                  <div class="column is-two-thirds">
+                  <div class="column">
+                    <div class="field">
+                      <div class="control has-icons-left">
+                        <input class="input" type="email" id="user_email" name="user_email" placeholder="メールアドレス" required>
+                        <span class="icon is-small is-left has-text-info">
+                          <i class="fas fa-envelope"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column"></div>
+                </div>
+                <!-- 2行目 -->
+                <div class="columns">
+                  <div class="column is-one-third">
+                    <div class="field password-control">
+                      <div class="control has-icons-left">
+                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="パスワード" required>
+                        <span class="icon is-small is-left has-text-info">
+                          <i class="fas fa-key"></i>
+                        </span>
+                        <i id="eyeIcon_u" class="fas fa-eye-slash eye-icon has-text-grey" style="cursor: pointer;" onclick="togglePasswordVisibility('user_pw', 'eyeIcon_u')"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3行目 -->
+                <div class="columns">
+                  <div class="column is-one-third">
                     <div class="field">
                       <div class="control"><b>種別：</b>
                         <label class="radio">
@@ -72,30 +100,8 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- 2行目 -->
-                <div class="columns">
-                  <div class="column">
-                    <div class="field">
-                      <div class="control has-icons-left">
-                        <input class="input" type="email" id="user_email" name="user_email" placeholder="メールアドレス" required>
-                        <span class="icon is-small is-left has-text-info">
-                          <i class="fas fa-envelope"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
-                    <div class="field">
-                      <div class="control has-icons-left">
-                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="パスワード" required>
-                        <span class="icon is-small is-left has-text-info">
-                          <i class="fas fa-key"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
+                  <div class="column is-one-third"></div>
+                  <div class="column is-one-third">
                     <div class="control">
                       <button type="submit" class="button is-primary">追加</button>
                     </div>
@@ -157,5 +163,6 @@ $users = $stmt->fetchAll();
         </table>
       </div>
     </section>
+    <script src="./assets/script.js"></script>
   </body>
 </html>

@@ -60,8 +60,8 @@ $users = $stmt->fetchAll();
             <div class="form-container">
               <form id="tag_nameForm" action="update_users.php" method="POST" onsubmit="return confirmUpdate()">
                 <!-- 1行目 -->
-                <div class="columns is-align-items-center">
-                  <div class="column">
+                <div class="columns">
+                  <div class="column is-one-third">
                     <div class="field">
                       <div class="control has-icons-left">
                         <input class="input" type="text" id="user_name" name="user_name" value="<?=$row["user_name"]?>" required>
@@ -71,7 +71,7 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                  <div class="column">
+                  <div class="column is-one-third">
                     <div class="field">
                       <div class="control has-icons-left">
                         <input class="input" type="email" id="user_email" name="user_email" value="<?=$row["user_email"]?>" required>
@@ -81,26 +81,45 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                  <div class="column">
+                </div>
+                <!-- 2行目 -->
+                <div class="columns">
+                  <div class="column is-one-third">
+                    <div class="field password-control">
+                      <div class="control has-icons-left">
+                        <input class="input" type="password" id="current_pw" name="user_pw" placeholder="現在のパスワード" required>
+                        <span class="icon is-small is-left has-text-info">
+                          <i class="fas fa-key"></i>
+                        </span>
+                        <i id="eyeIcon_c" class="fas fa-eye-slash eye-icon has-text-grey" style="cursor: pointer;" onclick="togglePasswordVisibility('current_pw', 'eyeIcon_c')"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column is-one-third">
+                    <div class="field password-control">
+                      <div class="control has-icons-left">
+                        <input class="input" type="password" id="new_pw" name="new_pw" placeholder="新しいパスワード(変更時)" required>
+                        <span class="icon is-small is-left has-text-warning">
+                          <i class="fas fa-key"></i>
+                        </span>
+                        <i id="eyeIcon_n" class="fas fa-eye-slash eye-icon has-text-grey" style="cursor: pointer;" onclick="togglePasswordVisibility('new_pw', 'eyeIcon_n')"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 3行目 -->
+                <div class="columns">
+                  <div class="column is-one-third">
                     <div class="field">
                       <div class="control"><b>種別：</b>
                       <!-- 管理者と一般で表示切り替え -->
                       <?php if ($_SESSION['is_admin'] == 1): ?>
-                        <?php if ($row["is_admin"] == 0): ?>
-                          <label class="radio">
-                            <input type="radio" name="is_admin" value="0" checked> 一般
-                          </label>　
-                          <label class="radio">
-                            <input type="radio" name="is_admin" value="1"> 管理者
-                          </label>
-                        <?php else : ?>
-                          <label class="radio">
-                            <input type="radio" name="is_admin" value="0"> 一般 
-                          </label>
-                          <label class="radio">
-                            <input type="radio" name="is_admin" value="1" checked> 管理者
-                          </label>
-                        <?php endif; ?>
+                        <label class="radio">
+                          <input type="radio" name="is_admin" value="0" <?= $row["is_admin"] == 0 ? 'checked' : '' ?>> 一般
+                        </label>　
+                        <label class="radio">
+                          <input type="radio" name="is_admin" value="1" <?= $row["is_admin"] == 1 ? 'checked' : '' ?>> 管理者
+                        </label>
                       <?php else : ?>
                           <label class="radio">
                             <input type="radio" name="is_admin" value="0" checked> 一般
@@ -109,43 +128,7 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- 2行目 -->
-                <div class="columns">
-
-                  <div class="column">
-                    <div class="field">
-                      <div class="control has-icons-left">
-                        <input class="input" type="password" id="user_pw" name="user_pw" placeholder="現在のパスワード" required>
-                        <span class="icon is-small is-left has-text-info">
-                          <i class="fas fa-key"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
-                    <div class="field">
-                      <div class="control has-icons-left">
-                        <input class="input" type="password" id="new_pw" name="new_pw" placeholder="新しいパスワード(変更時のみ)">
-                        <span class="icon is-small is-left has-text-warning">
-                          <i class="fas fa-key"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="column">
-                    <div class="control">
-                      <div class="buttons">
-                        <button type="submit" class="button is-primary">更新</button>
-                        <input type="hidden" name="id" value="<?=$id?>">
-                        <button type="button" class="button is-info is-outlined" onclick="window.location.href='users.php'">キャンセル</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- 3行目 -->
-                <div class="columns">
-                  <div class="column">
+                  <div class="column is-one-third">
                     <div class="field">
                       <div class="control"><b>アカウントの削除：</b>
                         <label class="checkbox">
@@ -155,6 +138,16 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
+                  <div class="column is-one-third">
+                    <div class="control">
+                      <div class="buttons">
+                        <button type="submit" class="button is-primary">更新</button>
+                        <input type="hidden" name="id" value="<?=$id?>">
+                        <button type="button" class="button is-info is-outlined" onclick="window.location.href='users.php'">キャンセル</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </form>
             </div>
@@ -203,6 +196,7 @@ $users = $stmt->fetchAll();
         </table>
       </div>
     </section>
+    
     <script>
       function confirmUpdate() {
         const lifeFlgCheckbox = document.getElementById('lifeFlgCheckbox');
@@ -212,5 +206,6 @@ $users = $stmt->fetchAll();
         return true;
       }
     </script>
+    <script src="./assets/script.js"></script>
   </body>
 </html>
