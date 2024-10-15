@@ -166,7 +166,6 @@ if ($status_user == false) {
                 </div>
               </div>
               <div class="field">
-                <!-- <label class="label" for="tags">タグ</label> -->
                 <?php if (!empty($row["tags"])): ?>
                 <?php
                   $tags = explode(",", $row["tags"]);
@@ -183,9 +182,27 @@ if ($status_user == false) {
                 </div>
               </div>
               <div class="field">
-                  <?php if (!empty($row["file_name"])): ?>
-                      <img src="upload/<?php echo h($row["file_name"]); ?>" alt="uploaded image" style="max-width: 100px; height: auto;">
-                  <?php endif; ?>
+                <?php if (!empty($row["file_name"])): ?>
+                  <?php 
+                      // ファイル名を配列に戻す
+                      $file_names = explode(',', $row["file_name"]); 
+                  ?>
+                  <?php foreach ($file_names as $file): ?>
+                    <img src="upload/<?php echo h(trim($file)); ?>" 
+                        alt="uploaded image" 
+                        style="max-width: 100px; height: auto; margin-right: 5px; cursor: pointer;" onclick="openModal('upload/<?php echo h(trim($file)); ?>')">
+                  <?php endforeach; ?>
+                <?php endif; ?>
+                <!-- モーダル -->
+                <div id="imageModal" class="modal">
+                  <div class="modal-background" style="cursor: pointer;" onclick="closeModal()"></div>
+                  <div class="modal-content">
+                    <p class="image is-4by3">
+                      <img id="modalImage" src="" alt="modal image">
+                    </p>
+                  </div>
+                  <!-- <button class="modal-close is-large" aria-label="close" onclick="closeModal()"></button> -->
+                </div>
               </div>
               <!-- 7行目 -->
               <div class="field">
@@ -276,6 +293,19 @@ if ($status_user == false) {
         inputs.forEach(input => {
           input.classList.remove('is-danger');
         });
+      }
+      
+      // モーダルの開閉
+      function openModal(imageSrc) {
+          const modal = document.getElementById('imageModal');
+          const modalImage = document.getElementById('modalImage');
+          modalImage.src = imageSrc;
+          modal.classList.add('is-active');
+      }
+      
+      function closeModal() {
+          const modal = document.getElementById('imageModal');
+          modal.classList.remove('is-active');
       }
     </script>
   </body>
