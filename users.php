@@ -6,8 +6,16 @@ include("funcs.php");
 sschk();
 $pdo = db_conn();
 
-// ユーザーの一覧取得
-$stmt = $pdo->query('SELECT * FROM users');
+// ユーザー情報の取得（管理者と一般ユーザーで取得内容を切り替え）
+if ($_SESSION['is_admin'] == 1) {
+    // 管理者の場合、全ユーザー情報を取得
+    $stmt = $pdo->query('SELECT * FROM users');
+} else {
+    // 一般の場合、自分の情報だけ取得
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');
+    $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stmt->execute();
+}
 $users = $stmt->fetchAll();
 ?>
 
@@ -24,15 +32,7 @@ $users = $stmt->fetchAll();
   <body>
     <?php include("inc/menu.html"); ?>
 
-    <!-- <section class="hero is-info">
-      <p class="title has-text-centered mobile-hidden">
-        お問い合わせ記録 ユーザー管理
-      </p>
-      <p class="title has-text-centered mobile-visible">
-        お問い合わせ記録<br>ユーザー管理
-      </p>
-    </section> -->
-
+    <!-- 管理者のみ表示 -->
     <?php if ($_SESSION['is_admin'] == 1): ?>
     <section class="section">
       <div class="container">
@@ -111,7 +111,14 @@ $users = $stmt->fetchAll();
 
     <section class="section">
       <div class="list-container block mt-5">
-        <h1 class="title">ユーザー一覧</h1>
+        <h1 class="title">
+          <!-- 管理者と一般で表示切り替え -->
+          <?php if ($_SESSION['is_admin'] == 1): ?>
+            ユーザー一覧
+          <?php else: ?>
+            ユーザー情報
+          <?php endif; ?>
+        </h1>
         <table class="table is-striped is-fullwidth">
           <thead>
             <tr>
@@ -141,9 +148,7 @@ $users = $stmt->fetchAll();
                   <?php endif; ?>
                 </td>
                 <td>
-                <?php if ($_SESSION['is_admin'] == 1): ?>
                   <a href="detail_users.php?id=<?= htmlspecialchars($user['id']) ?>"><i class="fas fa-pencil-alt"></i></a>
-                <?php endif; ?>
                 </td>
               </tr>
               <?php endforeach; ?>

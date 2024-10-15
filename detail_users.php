@@ -19,8 +19,16 @@ if($status==false) {
     $row = $stmt->fetch();
 }
 
-// ユーザーの一覧取得
-$stmt = $pdo->query('SELECT * FROM users');
+// ユーザー情報の取得（管理者と一般ユーザーで取得内容を切り替え）
+if ($_SESSION['is_admin'] == 1) {
+    // 管理者の場合、全ユーザー情報を取得
+    $stmt = $pdo->query('SELECT * FROM users');
+} else {
+    // 一般の場合、自分の情報だけ取得
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');
+    $stmt->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stmt->execute();
+}
 $users = $stmt->fetchAll();
 ?>
 
@@ -37,15 +45,6 @@ $users = $stmt->fetchAll();
   <body>
     <?php include("inc/menu.html"); ?>
 
-    <!-- <section class="hero is-info">
-      <p class="title has-text-centered mobile-hidden">
-        お問い合わせ記録 ユーザー管理
-      </p>
-      <p class="title has-text-centered mobile-visible">
-        お問い合わせ記録<br>ユーザー管理
-      </p>
-    </section> -->
-
     <section class="section">
       <div class="container">
         <div class="card">
@@ -59,7 +58,7 @@ $users = $stmt->fetchAll();
           </header>
           <div class="card-content">
             <div class="form-container">
-              <form id="tag_nameForm" action="update_users.php" method="POST">
+              <form id="tag_nameForm" action="update_users.php" method="POST" onsubmit="return confirmUpdate()">
                 <!-- 1行目 -->
                 <div class="columns is-align-items-center">
                   <div class="column">
@@ -72,6 +71,8 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
+                  <!-- 管理者と一般で表示切り替え -->
+                  <?php if ($_SESSION['is_admin'] == 1): ?>
                   <div class="column">
                     <div class="field">
                       <div class="control"><b>種別：</b>
@@ -93,12 +94,13 @@ $users = $stmt->fetchAll();
                       </div>
                     </div>
                   </div>
+                  <?php endif; ?>
                   <div class="column">
                     <div class="field">
                       <div class="control"><b>アカウントの削除：</b>
                         <label class="checkbox">
                           <input type="hidden" name="life_flg" value="0" />
-                          <input type="checkbox" name="life_flg" value="1" <?php if ($row["life_flg"] == 1) echo 'checked'; ?> />
+                          <input type="checkbox" id="lifeFlgCheckbox" name="life_flg" value="1" <?php if ($row["life_flg"] == 1) echo 'checked'; ?> />
                         </label>
                       </div>
                     </div>
@@ -183,5 +185,14 @@ $users = $stmt->fetchAll();
         </table>
       </div>
     </section>
+    <script>
+      function confirmUpdate() {
+        const lifeFlgCheckbox = document.getElementById('lifeFlgCheckbox');
+        if (lifeFlgCheckbox.checked) {
+          return confirm('このアカウントを削除しますか？');
+        }
+        return true;
+      }
+    </script>
   </body>
 </html>
