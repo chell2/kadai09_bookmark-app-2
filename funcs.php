@@ -57,8 +57,8 @@ function sschk(){
         header("Location: login.php");
         exit();
     }else{
-                session_regenerate_id(true);
-                $_SESSION["chk_ssid"] = session_id();
-            }
+        session_regenerate_id(true);
+        $_SESSION["chk_ssid"] = session_id();
+    }
 }
 ?>
