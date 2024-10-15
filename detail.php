@@ -36,8 +36,13 @@ $status_user = $stmt_user->execute();
 if ($status_user == false) {
     sql_error($stmt_user);
   } else {
-      $user_row = $stmt_user->fetch();
+    $user_row = $stmt_user->fetch();
   }
+  
+// life_flg が 0 の元請会社を取得
+$stmt = $pdo->prepare("SELECT name FROM prime_contractors WHERE life_flg = 0");
+$stmt->execute();
+$contractors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!--
@@ -75,10 +80,13 @@ if ($status_user == false) {
                     <div class="control">
                       <div class="select">
                         <select name="prime_contractor" required>
-                          <option value="D建設" <?= $row["prime_contractor"] === "D建設" ? 'selected' : '' ?>>D建設</option>
-                          <option value="S工業" <?= $row["prime_contractor"] === "S工業" ? 'selected' : '' ?>>S工業</option>
-                          <option value="K工務店" <?= $row["prime_contractor"] === "K工務店" ? 'selected' : '' ?>>K工務店</option>
-                          <option value="不明" <?= $row["prime_contractor"] === "不明" ? 'selected' : '' ?>>不明</option>
+                          <?php foreach ($contractors as $contractor): ?>
+                            <option value="<?= htmlspecialchars($contractor['name'], ENT_QUOTES, 'UTF-8') ?>"
+                              <?= $row["prime_contractor"] === $contractor['name'] ? 'selected' : '' ?>>
+                              <?= htmlspecialchars($contractor['name'], ENT_QUOTES, 'UTF-8') ?>
+                            </option>
+                          <?php endforeach; ?>
+                          <option value="不明">不明</option>
                         </select>
                       </div>
                     </div>
